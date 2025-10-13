@@ -34,8 +34,8 @@ class AuthenticatedSessionController extends Controller
             return redirect('/admin');
         }
         
-        // User biasa SELALU ke /dashboard, tidak peduli intended URL
-        return redirect()->route('dashboard');
+        // User biasa SELALU ke /home, tidak peduli intended URL
+        return redirect()->route('home');
     }
 
     /**

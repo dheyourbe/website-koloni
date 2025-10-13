@@ -26,24 +26,16 @@ class AdminUserSeeder extends Seeder
                 'is_admin' => true,
             ]
         );
-        
+
         // Create sample users
         User::create([
-            'name' => 'John Doe',
-            'email' => 'john@example.com',
+            'name' => 'User Account',
+            'email' => 'user@example.com',
             'no_wa' => '082345678901',
-            'password' => 'password123',
+            'password' => '123456789',
             'points' => 0,
         ]);
-        
-        User::create([
-            'name' => 'Jane Smith',
-            'email' => 'jane@example.com',
-            'no_wa' => '083456789012',
-            'password' => 'password123',
-            'points' => 0,
-        ]);
-        
+
         // Create sample products
         Product::create([
             'category' => 'minuman',
@@ -52,7 +44,7 @@ class AdminUserSeeder extends Seeder
             'price' => 25000,
             'photo' => null,
         ]);
-        
+
         Product::create([
             'category' => 'minuman',
             'title' => 'Latte',
@@ -60,7 +52,7 @@ class AdminUserSeeder extends Seeder
             'price' => 28000,
             'photo' => null,
         ]);
-        
+
         Product::create([
             'category' => 'makanan',
             'title' => 'Croissant',
@@ -68,7 +60,7 @@ class AdminUserSeeder extends Seeder
             'price' => 15000,
             'photo' => null,
         ]);
-        
+
         Product::create([
             'category' => 'makanan',
             'title' => 'Sandwich Club',
@@ -76,7 +68,7 @@ class AdminUserSeeder extends Seeder
             'price' => 35000,
             'photo' => null,
         ]);
-        
+
         Product::create([
             'category' => 'minuman',
             'title' => 'Americano',
