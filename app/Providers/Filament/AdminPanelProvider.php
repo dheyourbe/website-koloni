@@ -2,6 +2,8 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Resources\BilliardRentals\BilliardRentalResource;
+use App\Filament\Resources\BilliardTables\BilliardTableResource;
 use App\Filament\Resources\Products\ProductResource;
 use App\Filament\Resources\Users\UserResource;
 use App\Filament\Widgets\StatsOverview;
@@ -39,6 +41,8 @@ class AdminPanelProvider extends PanelProvider
             ->resources([
                 ProductResource::class,
                 UserResource::class,
+                BilliardTableResource::class,
+                BilliardRentalResource::class,
             ])
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
