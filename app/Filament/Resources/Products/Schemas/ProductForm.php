@@ -41,9 +41,11 @@ class ProductForm
                     ->label('Foto Produk')
                     ->image()
                     ->directory('products')
-                    ->visibility('public')
+                    ->disk('public')
                     ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
-                    ->maxSize(2048), // 2MB max
+                    ->maxSize(2048) // 2MB max
+                    ->openable()
+                    ->downloadable()
             ]);
     }
 }

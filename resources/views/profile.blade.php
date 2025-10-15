@@ -1,153 +1,205 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html class="scroll-smooth scroll-pt-20">
+
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>My Profile - {{ config('app.name', 'Laravel') }}</title>
-    
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('assets/styles/style.css') }}" />
+    <title>Profil Saya - {{ config('app.name', 'KoloniCoffee') }}</title>
 </head>
-<body class="font-sans antialiased bg-gray-100">
-    <!-- Navigation -->
-    <nav class="bg-white shadow-lg">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="flex justify-between h-16">
-                <div class="flex items-center">
-                    <a href="{{ route('home') }}" class="text-xl font-bold text-gray-800 hover:text-blue-600">
-                        Coffee & Billiard
-                    </a>
+
+<body class="america overflow-x-hidden">
+    <x-navigation />
+
+    <main class="main max-w-7xl mx-auto py-8 px-4">
+        <!-- Profile Header -->
+        <div class="bg-white border border-gray-200 p-6 mb-8">
+            <div class="flex items-center mb-6">
+                <div class="w-20 h-20 bg-[#1B2B28] rounded-full flex items-center justify-center text-white text-2xl font-bold gtbold mr-4">
+                    {{ strtoupper(substr($user->name, 0, 1)) }}
                 </div>
-                
-                <div class="flex items-center space-x-4">
-                    <span class="text-gray-600">Hello, {{ auth()->user()->name }}!</span>
-                    <a href="{{ route('home') }}" class="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition">
-                        Home
-                    </a>
-                    <form method="POST" action="{{ route('logout') }}" class="inline">
-                        @csrf
-                        <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition">
-                            Logout
-                        </button>
-                    </form>
+                <div>
+                    <h1 class="text-3xl font-bold gtbold text-[#1B2B28]">Profil Saya</h1>
+                    <p class="text-gray-600">Kelola informasi akun dan lihat histori pemesanan Anda</p>
                 </div>
             </div>
-        </div>
-    </nav>
 
-    <div class="max-w-7xl mx-auto py-8 px-4">
-        <!-- Profile Header -->
-        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
-            <h1 class="text-3xl font-bold text-gray-800 mb-6">My Profile</h1>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
-                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Personal Information</h2>
-                    <div class="space-y-3">
-                        <div>
-                            <label class="text-sm font-medium text-gray-600">Name</label>
-                            <p class="text-gray-800">{{ $user->name }}</p>
+                    <h2 class="text-xl font-semibold gtbold text-[#1B2B28] mb-4">Informasi Pribadi</h2>
+                    <div class="space-y-4">
+                        <div class="flex items-center">
+                            <i class="ri-user-line text-[#1B2B28] mr-3 text-xl"></i>
+                            <div>
+                                <label class="text-sm font-medium text-gray-600">Nama Lengkap</label>
+                                <p class="text-gray-800 gtmedium">{{ $user->name }}</p>
+                            </div>
                         </div>
-                        <div>
-                            <label class="text-sm font-medium text-gray-600">Email</label>
-                            <p class="text-gray-800">{{ $user->email }}</p>
+                        <div class="flex items-center">
+                            <i class="ri-mail-line text-[#1B2B28] mr-3 text-xl"></i>
+                            <div>
+                                <label class="text-sm font-medium text-gray-600">Email</label>
+                                <p class="text-gray-800 gtmedium">{{ $user->email }}</p>
+                            </div>
                         </div>
                         @if($user->no_wa)
-                        <div>
-                            <label class="text-sm font-medium text-gray-600">WhatsApp Number</label>
-                            <p class="text-gray-800">{{ $user->no_wa }}</p>
+                        <div class="flex items-center">
+                            <i class="ri-whatsapp-line text-[#1B2B28] mr-3 text-xl"></i>
+                            <div>
+                                <label class="text-sm font-medium text-gray-600">Nomor WhatsApp</label>
+                                <p class="text-gray-800 gtmedium">{{ $user->no_wa }}</p>
+                            </div>
                         </div>
                         @endif
-                        <div>
-                            <label class="text-sm font-medium text-gray-600">Member Since</label>
-                            <p class="text-gray-800">{{ $user->created_at->format('M d, Y') }}</p>
+                        <div class="flex items-center">
+                            <i class="ri-calendar-line text-[#1B2B28] mr-3 text-xl"></i>
+                            <div>
+                                <label class="text-sm font-medium text-gray-600">Bergabung Sejak</label>
+                                <p class="text-gray-800 gtmedium">{{ $user->created_at->format('d F Y') }}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-                
+
                 <div>
-                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Member Benefits</h2>
-                    <div class="space-y-3">
-                        <div class="flex items-center justify-between">
-                            <span class="text-gray-600">Current Points</span>
-                            <span class="text-2xl font-bold text-green-600">{{ $user->points ?? 0 }}</span>
+                    <h2 class="text-xl font-semibold gtbold text-[#1B2B28] mb-4">Keuntungan Member</h2>
+                    <div class="space-y-4">
+                        <div class="bg-[#1B2B28] text-white p-4 rounded-lg">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="gtregular">Poin Saat Ini</span>
+                                <span class="text-2xl font-bold gtbold">{{ $user->points ?? 0 }}</span>
+                            </div>
+                            <div class="w-full bg-gray-300 rounded-full h-2">
+                                <div class="bg-[#EAE3D6] h-2 rounded-full" style="width: {{ min(($user->points ?? 0) / 10, 100) }}%"></div>
+                            </div>
                         </div>
-                        <div class="flex items-center justify-between">
-                            <span class="text-gray-600">Member Discount</span>
-                            <span class="text-lg font-semibold text-blue-600">10%</span>
-                        </div>
-                        <div class="bg-blue-50 p-3 rounded-md">
-                            <p class="text-sm text-blue-800">
-                                <strong>Member Benefits:</strong><br>
-                                • 10% discount on all billiard bookings<br>
-                                • Earn points with every booking<br>
-                                • Priority booking for busy hours
-                            </p>
+
+                        <div class="border border-gray-200 p-4 rounded-lg">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="gtmedium text-gray-700">Diskon Member</span>
+                                <span class="text-xl font-bold gtbold text-[#1B2B28]">10%</span>
+                            </div>
+
+                            <div class="space-y-2">
+                                <div class="flex items-center text-sm">
+                                    <i class="ri-checkbox-circle-fill text-green-500 mr-2"></i>
+                                    <span class="gtregular">Diskon 10% untuk semua pemesanan billiard</span>
+                                </div>
+                                <div class="flex items-center text-sm">
+                                    <i class="ri-checkbox-circle-fill text-green-500 mr-2"></i>
+                                    <span class="gtregular">Dapatkan poin dengan setiap transaksi</span>
+                                </div>
+                                <div class="flex items-center text-sm">
+                                    <i class="ri-checkbox-circle-fill text-green-500 mr-2"></i>
+                                    <span class="gtregular">Prioritas pemesanan di jam sibuk</span>
+                                </div>
+                                <div class="flex items-center text-sm">
+                                    <i class="ri-checkbox-circle-fill text-green-500 mr-2"></i>
+                                    <span class="gtregular">Penawaran eksklusif untuk member</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            
-            <div class="mt-6">
-                <a href="{{ route('profile.edit') }}" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">
-                    Edit Profile
+
+            <div class="mt-8 flex flex-wrap gap-4">
+                <a href="{{ route('profile.edit') }}" class="bg-[#1B2B28] text-white px-6 py-3 rounded-full gtmedium hover:bg-[#701D0D] transition-all flex items-center gap-2">
+                    <i class="ri-edit-line"></i>
+                    Edit Profil
+                </a>
+                <a href="{{ route('billiard.index') }}" class="border-2 border-[#1B2B28] text-[#1B2B28] px-6 py-3 rounded-full gtmedium hover:bg-[#1B2B28] hover:text-white transition-all flex items-center gap-2">
+                    <i class="ri-add-line"></i>
+                    Pesan Meja
                 </a>
             </div>
         </div>
 
         <!-- Booking History -->
-        <div class="bg-white rounded-lg shadow-md p-6">
-            <h2 class="text-2xl font-bold text-gray-800 mb-6">Booking History</h2>
-            
+        <div class="bg-white border border-gray-200 p-6">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-2xl font-bold gtbold text-[#1B2B28]">Riwayat Pemesanan</h2>
+
+                @auth
+                <a href="{{ route('billiard.history') }}"
+                class="text-[#1B2B28] hover:text-[#701D0D] text-sm font-medium flex items-center gap-2 gtmedium">
+                <i class="ri-history-line"></i>
+                <span>[{{ $rentals->count() }}]</span>
+                            Lihat Riwayat Pemesanan
+                        </a>
+                    @else
+                        <a href="{{ route('login') }}"
+                           class="text-[#1B2B28] hover:text-[#701D0D] text-sm font-medium flex items-center gap-2 gtmedium">
+                            <i class="ri-login-box-line"></i>
+                            Login untuk lihat riwayat
+                        </a>
+                    @endauth
+            </div>
+
             @if($rentals->count() > 0)
                 <div class="overflow-x-auto">
                     <table class="w-full">
                         <thead class="bg-gray-50">
                             <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Transaction</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Table</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date & Time</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Duration</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Transaksi</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Meja</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal & Waktu</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Durasi</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Discount</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Diskon</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
                             @foreach($rentals as $rental)
-                            <tr>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                    {{ $rental->transaction_number }}
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="w-8 h-8 bg-[#1B2B28] rounded-full flex items-center justify-center text-white text-xs font-bold mr-2">
+                                            {{ strtoupper(substr($rental->transaction_number, 0, 1)) }}
+                                        </div>
+                                        <span class="text-sm font-medium text-gray-900 gtmedium">{{ $rental->transaction_number }}</span>
+                                    </div>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{ $rental->billiardTable->table_number }}
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <i class="ri-table-line text-[#1B2B28] mr-2"></i>
+                                        <span class="text-sm text-gray-900 gtmedium">Meja {{ $rental->billiardTable->table_number }}</span>
+                                    </div>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{ $rental->rental_start ? $rental->rental_start->format('M d, Y H:i') : 'Not set' }}
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 gtregular">
+                                    {{ $rental->rental_start ? $rental->rental_start->format('d F Y, H:i') : 'Belum ditentukan' }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{ $rental->duration_hours }} hours
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 gtregular">
+                                    <div class="flex items-center">
+                                        <i class="ri-time-line text-[#1B2B28] mr-1"></i>
+                                        {{ $rental->duration_hours }} jam
+                                    </div>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                    Rp {{ number_format($rental->total_amount, 0, ',', '.') }}
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="text-sm font-semibold text-[#1B2B28] gtbold">Rp {{ number_format($rental->total_amount, 0, ',', '.') }}</span>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-green-600">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">
                                     @if($rental->discount_amount > 0)
-                                        -Rp {{ number_format($rental->discount_amount, 0, ',', '.') }}
+                                        <span class="text-green-600 gtmedium">-Rp {{ number_format($rental->discount_amount, 0, ',', '.') }}</span>
                                     @else
-                                        -
+                                        <span class="text-gray-400 gtregular">-</span>
                                     @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
+                                    <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full gtmedium
                                         @if($rental->status === 'paid') bg-green-100 text-green-800
                                         @elseif($rental->status === 'pending') bg-yellow-100 text-yellow-800
                                         @else bg-red-100 text-red-800 @endif">
-                                        {{ ucfirst($rental->status) }}
+                                        @if($rental->status === 'paid')
+                                            <i class="ri-checkbox-circle-fill mr-1"></i> Lunas
+                                        @elseif($rental->status === 'pending')
+                                            <i class="ri-time-fill mr-1"></i> Menunggu
+                                        @else
+                                            <i class="ri-close-circle-fill mr-1"></i> Batal
+                                        @endif
                                     </span>
                                 </td>
                             </tr>
@@ -155,7 +207,7 @@
                         </tbody>
                     </table>
                 </div>
-                
+
                 <!-- Pagination -->
                 <div class="mt-6">
                     {{ $rentals->links() }}
@@ -163,24 +215,17 @@
             @else
                 <div class="text-center py-12">
                     <div class="text-gray-400 mb-4">
-                        <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-                        </svg>
+                        <i class="ri-calendar-2-line text-6xl"></i>
                     </div>
-                    <p class="text-gray-600 text-lg mb-4">No bookings yet</p>
-                    <a href="{{ route('home') }}#billiard-tables" class="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 transition">
-                        Book Your First Table
+                    <h3 class="text-xl font-semibold text-gray-700 mb-2 gtbold">Belum Ada Pemesanan</h3>
+                    <p class="text-gray-500 mb-6 gtregular">Anda belum pernah melakukan pemesanan meja billiard</p>
+                    <a href="{{ route('billiard.index') }}" class="bg-[#1B2B28] text-white px-6 py-3 rounded-full gtmedium hover:bg-[#701D0D] transition-all flex items-center gap-2 mx-auto w-fit">
+                        <i class="ri-add-line"></i>
+                        Buat Pemesanan Pertama Anda
                     </a>
                 </div>
             @endif
         </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-12 mt-12">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <p>&copy; 2025 Coffee & Billiard. All rights reserved.</p>
-        </div>
-    </footer>
+    </main>
 </body>
 </html>

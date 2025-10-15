@@ -1,232 +1,289 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Book Billiard Table') }}
-        </h2>
-    </x-slot>
+<!DOCTYPE html>
+<html class="scroll-smooth scroll-pt-20">
 
-    <div class="py-12">
-        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    <!-- Pricing Information -->
-                    <div class="mb-8">
-                        <div class="bg-blue-50 p-6 rounded-lg">
-                            <h4 class="font-medium text-blue-900 mb-4 text-lg">🎱 Billiard Table Rental</h4>
-                            <div class="grid grid-cols-2 gap-4 mb-4">
-                                <div>
-                                    <p class="text-sm text-blue-800">
-                                        <span class="font-medium">Regular Rate:</span> Rp 120,000 per hour
-                                    </p>
-                                </div>
-                                <div>
-                                    @auth
-                                        <p class="text-sm text-green-800">
-                                            <span class="font-medium">🎁 Member Rate:</span> Rp 108,000 per hour (10% off)
-                                        </p>
-                                    @else
-                                        <p class="text-sm text-orange-700">
-                                            💡 <a href="{{ route('login') }}" class="underline font-medium">Login</a> or <a href="{{ route('register') }}" class="underline font-medium">Register</a> to get 10% member discount!
-                                        </p>
-                                    @endauth
-                                </div>
-                            </div>
-                            
-                            @guest
-                            <div class="bg-yellow-50 border border-yellow-200 rounded-md p-3 mb-4">
-                                <div class="flex">
-                                    <svg class="w-5 h-5 text-yellow-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
-                                    </svg>
-                                    <div class="ml-3">
-                                        <p class="text-sm text-yellow-800">
-                                            <strong>💰 Save Money!</strong> Create a free account to get 10% off all billiard rentals. 
-                                            <a href="{{ route('register') }}" class="underline font-medium">Register now</a> and start saving!
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            @endguest
-                            <p class="text-sm text-blue-700">📅 Available: 9:00 AM - 10:00 PM daily</p>
-                        </div>
-                    </div>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('assets/styles/style.css') }}" />
+    <title>Pesan Meja Billiard - {{ config('app.name', 'KoloniCoffee') }}</title>
+</head>
 
-                    <!-- Booking Form -->
-                    <form action="{{ route('billiard.store') }}" method="POST" id="bookingForm">
-                        @csrf
-                        <input type="hidden" name="billiard_table_id" value="" id="selectedTableId">
-                        
-                        <div class="grid grid-cols-1 gap-6">
-                            <!-- Table Selection -->
-                            <div>
-                                <label for="table_select" class="block text-sm font-medium text-gray-700">
-                                    Select Billiard Table
-                                </label>
-                                <select id="table_select" name="table_select" required
-                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                                        onchange="updateSelectedTable()">
-                                    <option value="">Choose a table...</option>
-                                    @foreach($tables as $table)
-                                        <option value="{{ $table->id }}" 
-                                                data-name="{{ $table->name ?: $table->table_number }}"
-                                                data-number="{{ $table->table_number }}"
-                                                {{ $selectedTable && $selectedTable->id == $table->id ? 'selected' : '' }}>
-                                            {{ $table->table_number }} {{ $table->name ? '- ' . $table->name : '' }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                <p class="mt-1 text-xs text-gray-500">Select which table you want to book</p>
-                                @error('billiard_table_id')
-                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
-                            </div>
+<body class="america overflow-x-hidden">
+    <x-navigation />
 
-                            <!-- Customer Name -->
-                            <div>
-                                <label for="customer_name" class="block text-sm font-medium text-gray-700">Customer Name</label>
-                                <input type="text" id="customer_name" name="customer_name" 
-                                       value="{{ old('customer_name', $user?->name) }}" required
-                                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
-                                @error('customer_name')
-                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
-                            </div>
+    <main class="main max-w-4xl mx-auto py-12 px-4">
+        <!-- Header Section -->
+        <div class="text-center mb-8">
 
-                            <!-- WhatsApp Number -->
-                            <div>
-                                <label for="customer_whatsapp" class="block text-sm font-medium text-gray-700">
-                                    WhatsApp Number <span class="text-gray-500">(optional, for receipt)</span>
-                                </label>
-                                <input type="text" id="customer_whatsapp" name="customer_whatsapp" 
-                                       value="{{ old('customer_whatsapp', $user?->no_wa) }}"
-                                       placeholder="e.g., 08123456789"
-                                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
-                                <p class="mt-1 text-xs text-gray-500">Receipt will be sent to this WhatsApp number</p>
-                                @error('customer_whatsapp')
-                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
-                            </div>
+            <h1 class="text-3xl font-bold gtbold text-[#1B2B28] mb-2">Pesan Meja Billiard</h1>
+            <p class="text-gray-600 gtregular">Lengkapi formulir di bawah untuk memesan meja billiard favorit Anda</p>
+        </div>
 
-                            <!-- Rental Start Time -->
-                            <div>
-                                <label for="rental_start" class="block text-sm font-medium text-gray-700">
-                                    Rental Start Time
-                                </label>
-                                <input type="datetime-local" id="rental_start" name="rental_start" 
-                                       value="{{ old('rental_start', now()->addHour()->format('Y-m-d\TH:i')) }}" required
-                                       min="{{ now()->format('Y-m-d\TH:i') }}"
-                                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                                       onchange="checkAvailability()">
-                                <p class="mt-1 text-xs text-gray-500">Select when you want to start your rental</p>
-                                @error('rental_start')
-                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
-                            </div>
-
-                            <!-- Duration -->
-                            <div>
-                                <label for="duration_hours" class="block text-sm font-medium text-gray-700">
-                                    Rental Duration (Hours)
-                                </label>
-                                <select id="duration_hours" name="duration_hours" required
-                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                                        onchange="calculatePrice(); checkAvailability();">
-                                    <option value="">Select duration...</option>
-                                    @for($i = 1; $i <= 24; $i++)
-                                        <option value="{{ $i }}" {{ old('duration_hours') == $i ? 'selected' : '' }}>
-                                            {{ $i }} hour{{ $i > 1 ? 's' : '' }}
-                                        </option>
-                                    @endfor
-                                </select>
-                                @error('duration_hours')
-                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
-                            </div>
-
-                            <!-- Availability Status -->
-                            <div id="availabilityStatus" style="display: none;"></div>
-                        </div>
-
-                        <!-- Price Calculation -->
-                        <div class="mt-8 bg-gray-50 p-6 rounded-lg" id="priceCalculation" style="display: none;">
-                            <h4 class="font-medium text-gray-900 mb-4">Price Calculation</h4>
-                            <div class="space-y-2 text-sm">
-                                <div class="flex justify-between">
-                                    <span>Price per hour:</span>
-                                    <span id="pricePerHour">-</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span>Subtotal:</span>
-                                    <span id="subtotal">-</span>
-                                </div>
-                                <div class="flex justify-between" id="discountRow" style="display: none;">
-                                    <span class="text-green-600">Member Discount (10%):</span>
-                                    <span class="text-green-600" id="discount">-</span>
-                                </div>
-                                <div class="border-t border-gray-200 pt-2 flex justify-between font-medium text-lg">
-                                    <span>Total Amount:</span>
-                                    <span id="totalAmount" class="text-blue-600">-</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Error Messages -->
-                        @if ($errors->any())
-                            <div class="mt-6 bg-red-50 border border-red-200 rounded-md p-4">
-                                <div class="flex">
-                                    <svg class="w-5 h-5 text-red-400" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
-                                    </svg>
-                                    <div class="ml-3">
-                                        <h3 class="text-sm font-medium text-red-800">Please correct the following errors:</h3>
-                                        <div class="mt-2 text-sm text-red-700">
-                                            <ul class="list-disc pl-5 space-y-1">
-                                                @foreach ($errors->all() as $error)
-                                                    <li>{{ $error }}</li>
-                                                @endforeach
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        @endif
-
-                        <!-- Action Buttons -->
-                        <div class="mt-8 flex items-center justify-end space-x-4">
-                            <a href="{{ route('billiard.index') }}" 
-                               class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                                Cancel
-                            </a>
-                            <button type="submit" id="payButton"
-                                    class="bg-blue-600 py-2 px-6 border border-transparent rounded-md shadow-sm text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
-                                    disabled>
-                                🎱 Pay & Book Now
-                            </button>
-                        </div>
-                    </form>
+        <!-- Pricing Information -->
+        <div class="bg-[#1B2B28] text-white p-6 rounded-lg mb-8">
+            <div class="flex items-center justify-between mb-4">
+                <h4 class="font-medium text-lg gtbold flex items-center gap-2">
+                    <i class="ri-price-tag-3-line"></i>
+                    Informasi Harga
+                </h4>
+                <div class="flex items-center gap-2">
+                    <i class="ri-time-line"></i>
+                    <span class="text-sm gtregular">Jam Operasional: 10:00 - 22:00 WIB</span>
                 </div>
             </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-white/10 p-4 rounded-lg">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm gtregular opacity-90">Tarif Normal</p>
+                            <p class="text-xl font-bold gtbold">Rp 120.000</p>
+                            <p class="text-xs gtregular opacity-75">per jam</p>
+                        </div>
+                        <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+                            <i class="ri-money-dollar-circle-line text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white/10 p-4 rounded-lg">
+                    @auth
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm gtregular opacity-90 flex items-center gap-1">
+                                    <i class="ri-vip-crown-fill text-yellow-400"></i>
+                                    Harga Member
+                                </p>
+                                <p class="text-xl font-bold gtbold">Rp 108.000</p>
+                                <p class="text-xs gtregular opacity-75">per jam (hemat 10%)</p>
+                            </div>
+                            <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+                                <i class="ri-gift-line text-xl text-yellow-400"></i>
+                            </div>
+                        </div>
+                    @else
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm gtregular opacity-90">Belum Member?</p>
+                                <p class="text-lg font-medium gtbold">Dapatkan Diskon 10%</p>
+                                <p class="text-xs gtregular opacity-75">Daftar sekarang!</p>
+                            </div>
+                            <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+                                <i class="ri-user-add-line text-xl"></i>
+                            </div>
+                        </div>
+                    @endauth
+                </div>
+            </div>
+
+            @guest
+                <div class="bg-yellow-400/20 border border-yellow-400/30 rounded-md p-3 mt-4 flex items-center gap-3">
+                    <i class="ri-lightbulb-line text-yellow-400 text-xl"></i>
+                    <p class="text-sm gtregular">
+                        <span class="font-medium gtbold">💡 Hemat Uang!</span>
+                        <a href="{{ route('register') }}" class="underline font-medium text-yellow-300 hover:text-yellow-200">Daftar gratis</a>
+                        atau
+                        <a href="{{ route('login') }}" class="underline font-medium text-yellow-300 hover:text-yellow-200">login</a>
+                        untuk dapatkan diskon 10% untuk semua pemesanan billiard!
+                    </p>
+                </div>
+            @endguest
         </div>
-    </div>
+
+        <!-- Booking Form -->
+        <div class="bg-white border border-gray-200 rounded-lg p-6">
+            <form action="{{ route('billiard.store') }}" method="POST" id="bookingForm">
+                @csrf
+                <input type="hidden" name="billiard_table_id" value="" id="selectedTableId">
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Table Selection -->
+                    <div>
+                        <label for="table_select" class="text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+                            <i class="ri-table-line text-[#1B2B28]"></i>
+                            Pilih Meja Billiard
+                        </label>
+                        <select id="table_select" name="table_select" required
+                                class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#1B2B28] focus:border-[#1B2B28] gtregular"
+                                onchange="updateSelectedTable()">
+                            <option value="">Pilih meja...</option>
+                            @foreach($tables as $table)
+                                <option value="{{ $table->id }}"
+                                        data-name="{{ $table->name ?: $table->table_number }}"
+                                        data-number="{{ $table->table_number }}"
+                                        {{ $selectedTable && $selectedTable->id == $table->id ? 'selected' : '' }}>
+                                    Meja {{ $table->table_number }} {{ $table->name ? '- ' . $table->name : '' }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <p class="mt-1 text-xs text-gray-500 gtregular">Pilih meja yang ingin Anda pesan</p>
+                        @error('billiard_table_id')
+                            <p class="mt-1 text-sm text-red-600 gtregular">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Customer Name -->
+                    <div>
+                        <label for="customer_name" class="text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+                            <i class="ri-user-line text-[#1B2B28]"></i>
+                            Nama Lengkap
+                        </label>
+                        <input type="text" id="customer_name" name="customer_name"
+                               value="{{ old('customer_name', $user?->name) }}" required
+                               placeholder="Masukkan nama lengkap Anda"
+                               class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#1B2B28] focus:border-[#1B2B28] gtregular">
+                        @error('customer_name')
+                            <p class="mt-1 text-sm text-red-600 gtregular">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- WhatsApp Number -->
+                    <div>
+                        <label for="customer_whatsapp" class="text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+                            <i class="ri-whatsapp-line text-[#1B2B28]"></i>
+                            Nomor WhatsApp
+                            <span class="text-gray-500 text-xs gtregular">(untuk bukti pembayaran)</span>
+                        </label>
+                        <input type="text" id="customer_whatsapp" name="customer_whatsapp"
+                               value="{{ old('customer_whatsapp', $user?->no_wa) }}"
+                               placeholder="contoh: 08123456789"
+                               class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#1B2B28] focus:border-[#1B2B28] gtregular">
+                        <p class="mt-1 text-xs text-gray-500 gtregular">Struk pembayaran akan dikirim ke nomor ini</p>
+                        @error('customer_whatsapp')
+                            <p class="mt-1 text-sm text-red-600 gtregular">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Rental Start Time -->
+                    <div>
+                        <label for="rental_start" class="text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+                            <i class="ri-calendar-line text-[#1B2B28]"></i>
+                            Waktu Mulai Sewa
+                        </label>
+                        <input type="datetime-local" id="rental_start" name="rental_start"
+                               value="{{ old('rental_start', now()->addHour()->format('Y-m-d\TH:i')) }}" required
+                               min="{{ now()->format('Y-m-d\TH:i') }}"
+                               class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#1B2B28] focus:border-[#1B2B28] gtregular"
+                               onchange="checkAvailability()">
+                        <p class="mt-1 text-xs text-gray-500 gtregular">Pilih waktu ketika Anda ingin mulai bermain</p>
+                        @error('rental_start')
+                            <p class="mt-1 text-sm text-red-600 gtregular">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Duration -->
+                    <div>
+                        <label for="duration_hours" class="text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+                            <i class="ri-time-line text-[#1B2B28]"></i>
+                            Durasi Sewa (Jam)
+                        </label>
+                        <select id="duration_hours" name="duration_hours" required
+                                class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#1B2B28] focus:border-[#1B2B28] gtregular"
+                                onchange="calculatePrice(); checkAvailability();">
+                            <option value="">Pilih durasi...</option>
+                            @for($i = 1; $i <= 24; $i++)
+                                <option value="{{ $i }}" {{ old('duration_hours') == $i ? 'selected' : '' }}>
+                                    {{ $i }} jam
+                                </option>
+                            @endfor
+                        </select>
+                        @error('duration_hours')
+                            <p class="mt-1 text-sm text-red-600 gtregular">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+
+                <!-- Availability Status -->
+                <div id="availabilityStatus" class="mt-6" style="display: none;"></div>
+
+                <!-- Price Calculation -->
+                <div class="mt-8 bg-gray-50 border border-gray-200 p-6 rounded-lg" id="priceCalculation" style="display: none;">
+                    <h4 class="font-medium text-gray-900 mb-4 flex items-center gap-2 gtbold">
+                        <i class="ri-calculator-line text-[#1B2B28]"></i>
+                        Rincian Biaya
+                    </h4>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-600 gtregular">Harga per jam:</span>
+                            <span id="pricePerHour" class="font-medium gtbold">-</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-600 gtregular">Subtotal:</span>
+                            <span id="subtotal" class="font-medium gtbold">-</span>
+                        </div>
+                        <div class="flex justify-between items-center" id="discountRow" style="display: none;">
+                            <span class="text-green-600 gtmedium flex items-center gap-1">
+                                <i class="ri-vip-crown-fill text-yellow-500"></i>
+                                Diskon Member (10%):
+                            </span>
+                            <span class="text-green-600 font-medium gtbold" id="discount">-</span>
+                        </div>
+                        <div class="border-t border-gray-300 pt-3 flex justify-between items-center">
+                            <span class="text-lg font-bold text-[#1B2B28] gtbold">Total Pembayaran:</span>
+                            <span id="totalAmount" class="text-xl font-bold text-[#1B2B28] gtbold">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Error Messages -->
+                @if ($errors->any())
+                    <div class="mt-6 bg-red-50 border border-red-200 rounded-md p-4">
+                        <div class="flex items-start gap-3">
+                            <i class="ri-error-warning-line text-red-400 text-xl flex-shrink-0 mt-0.5"></i>
+                            <div>
+                                <h3 class="text-sm font-medium text-red-800 gtbold mb-2">Perbaiki kesalahan berikut:</h3>
+                                <div class="text-sm text-red-700 gtregular">
+                                    <ul class="list-disc pl-5 space-y-1">
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
+                <!-- Action Buttons -->
+                <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-end">
+                    <a href="{{ route('billiard.index') }}"
+                       class="border-2 border-gray-300 text-gray-700 px-6 py-3 rounded-full font-medium transition-all hover:bg-gray-50 flex items-center justify-center gap-2 gtmedium">
+                        <i class="ri-arrow-left-line"></i>
+                        Kembali
+                    </a>
+                    <button type="submit" id="payButton"
+                            class="bg-[#1B2B28] hover:bg-[#701D0D] text-white px-6 py-3 rounded-full font-medium transition-all flex items-center justify-center gap-2 gtmedium disabled:opacity-50 disabled:cursor-not-allowed"
+                            disabled>
+                        <i class="ri-shopping-cart-line"></i>
+                        Pesan & Bayar Sekarang
+                    </button>
+                </div>
+            </form>
+        </div>
+
+    </main>
+
+    <x-footer />
 
     <script>
         let availabilityTimer = null;
-        
+
         function updateSelectedTable() {
             const tableSelect = document.getElementById('table_select');
             const selectedTableId = document.getElementById('selectedTableId');
-            
+
             selectedTableId.value = tableSelect.value;
-            
+
             // Reset price calculation and availability when table changes
             const priceCalculation = document.getElementById('priceCalculation');
             const availabilityStatus = document.getElementById('availabilityStatus');
             const payButton = document.getElementById('payButton');
-            
+
             priceCalculation.style.display = 'none';
             availabilityStatus.style.display = 'none';
             payButton.disabled = true;
-            
+
             // Recalculate if duration is already selected
             const duration = document.getElementById('duration_hours').value;
             if (duration && tableSelect.value) {
@@ -239,13 +296,13 @@
             const duration = parseInt(durationSelect.value);
             const payButton = document.getElementById('payButton');
             const priceCalculation = document.getElementById('priceCalculation');
-            
+
             if (!duration) {
                 priceCalculation.style.display = 'none';
                 payButton.disabled = true;
                 return;
             }
-            
+
             fetch('{{ route('billiard.calculate-price') }}', {
                 method: 'POST',
                 headers: {
@@ -261,7 +318,7 @@
                     document.getElementById('pricePerHour').textContent = data.formatted.price_per_hour;
                     document.getElementById('subtotal').textContent = data.formatted.subtotal;
                     document.getElementById('totalAmount').textContent = data.formatted.total_amount;
-                    
+
                     const discountRow = document.getElementById('discountRow');
                     if (data.is_member && data.pricing.discount_amount > 0) {
                         document.getElementById('discount').textContent = '- ' + data.formatted.discount_amount;
@@ -269,7 +326,7 @@
                     } else {
                         discountRow.style.display = 'none';
                     }
-                    
+
                     priceCalculation.style.display = 'block';
                     // Don't enable button yet, check availability first
                     checkAvailability();
@@ -288,10 +345,11 @@
         function checkAvailability() {
             const rentalStart = document.getElementById('rental_start').value;
             const duration = document.getElementById('duration_hours').value;
+            const tableId = document.getElementById('selectedTableId').value;
             const availabilityStatus = document.getElementById('availabilityStatus');
             const payButton = document.getElementById('payButton');
 
-            if (!rentalStart || !duration) {
+            if (!rentalStart || !duration || !tableId) {
                 availabilityStatus.style.display = 'none';
                 payButton.disabled = true;
                 return;
@@ -304,14 +362,11 @@
 
             // Show loading state
             availabilityStatus.innerHTML = `
-                <div class="bg-yellow-50 border border-yellow-200 rounded-md p-3">
-                    <div class="flex">
-                        <svg class="animate-spin h-5 w-5 text-yellow-400" fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                        <p class="ml-3 text-sm font-medium text-yellow-800">Checking availability...</p>
+                <div class="bg-yellow-50 border border-yellow-200 rounded-md p-4 flex items-center gap-3">
+                    <div class="animate-spin">
+                        <i class="ri-loader-4-line text-yellow-600 text-xl"></i>
                     </div>
+                    <p class="text-sm font-medium text-yellow-800 gtregular">Memeriksa ketersediaan meja...</p>
                 </div>
             `;
             availabilityStatus.style.display = 'block';
@@ -326,35 +381,27 @@
                         'Accept': 'application/json',
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                     },
-                    body: JSON.stringify({ 
+                    body: JSON.stringify({
                         duration_hours: parseInt(duration),
                         rental_start: rentalStart,
-                        table_id: document.getElementById('selectedTableId').value
+                        table_id: tableId
                     })
                 })
                 .then(response => response.json())
                 .then(data => {
                     if (data.success && data.available !== false) {
                         availabilityStatus.innerHTML = `
-                            <div class="bg-green-50 border border-green-200 rounded-md p-3">
-                                <div class="flex">
-                                    <svg class="h-5 w-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                                    </svg>
-                                    <p class="ml-3 text-sm font-medium text-green-800">Table is available for the selected time</p>
-                                </div>
+                            <div class="bg-green-50 border border-green-200 rounded-md p-4 flex items-center gap-3">
+                                <i class="ri-checkbox-circle-fill text-green-600 text-xl"></i>
+                                <p class="text-sm font-medium text-green-800 gtregular">Meja tersedia untuk waktu yang dipilih</p>
                             </div>
                         `;
                         payButton.disabled = false;
                     } else {
                         availabilityStatus.innerHTML = `
-                            <div class="bg-red-50 border border-red-200 rounded-md p-3">
-                                <div class="flex">
-                                    <svg class="h-5 w-5 text-red-400" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
-                                    </svg>
-                                    <p class="ml-3 text-sm font-medium text-red-800">${data.message || 'Table is not available for the selected time'}</p>
-                                </div>
+                            <div class="bg-red-50 border border-red-200 rounded-md p-4 flex items-center gap-3">
+                                <i class="ri-close-circle-fill text-red-600 text-xl"></i>
+                                <p class="text-sm font-medium text-red-800 gtregular">${data.message || 'Meja tidak tersedia untuk waktu yang dipilih'}</p>
                             </div>
                         `;
                         payButton.disabled = true;
@@ -364,36 +411,34 @@
                 .catch(error => {
                     console.error('Error checking availability:', error);
                     availabilityStatus.innerHTML = `
-                        <div class="bg-red-50 border border-red-200 rounded-md p-3">
-                            <div class="flex">
-                                <svg class="h-5 w-5 text-red-400" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
-                                </svg>
-                                <p class="ml-3 text-sm font-medium text-red-800">Error checking availability</p>
-                            </div>
+                        <div class="bg-red-50 border border-red-200 rounded-md p-4 flex items-center gap-3">
+                            <i class="ri-error-warning-fill text-red-600 text-xl"></i>
+                            <p class="text-sm font-medium text-red-800 gtregular">Terjadi kesalahan saat memeriksa ketersediaan</p>
                         </div>
                     `;
                     payButton.disabled = true;
                 });
             }, 500); // 500ms delay
         }
-        
+
         // Auto-calculate if duration is already selected (for form errors)
         document.addEventListener('DOMContentLoaded', function() {
             const durationSelect = document.getElementById('duration_hours');
             const rentalStart = document.getElementById('rental_start');
             const tableSelect = document.getElementById('table_select');
-            
+
             // Initialize selected table ID
             updateSelectedTable();
-            
-            if (durationSelect.value && rentalStart.value && tableSelect.value) {
-                calculatePrice();
-            } else if (durationSelect.value && tableSelect.value) {
-                calculatePrice();
-            } else if (rentalStart.value && tableSelect.value) {
-                checkAvailability();
-            }
+
+            // Check if all fields are filled and trigger calculation
+            setTimeout(() => {
+                if (durationSelect.value && rentalStart.value && tableSelect.value) {
+                    calculatePrice();
+                } else if (durationSelect.value && tableSelect.value) {
+                    calculatePrice();
+                }
+            }, 100);
         });
     </script>
-</x-app-layout>
+</body>
+</html>

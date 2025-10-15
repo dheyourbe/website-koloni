@@ -8,4 +8,9 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateBilliardRental extends CreateRecord
 {
     protected static string $resource = BilliardRentalResource::class;
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }

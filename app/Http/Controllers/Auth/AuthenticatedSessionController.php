@@ -28,12 +28,12 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        // Role-based redirect: Admin ke /admin, User biasa ke /dashboard
+        // Role-based redirect: Admin ke /admin, User biasa ke /home
         $user = Auth::user();
         if ($user->is_admin) {
             return redirect('/admin');
         }
-        
+
         // User biasa SELALU ke /home, tidak peduli intended URL
         return redirect()->route('home');
     }

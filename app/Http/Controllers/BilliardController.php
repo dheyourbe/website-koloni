@@ -216,4 +216,25 @@ class BilliardController extends Controller
             'receipt-' . $rental->transaction_number . '.pdf'
         );
     }
+
+    /**
+     * Update payment status
+     */
+    public function updatePaymentStatus(Request $request, BilliardRental $rental)
+    {
+        $user = Auth::user();
+
+        // Check if user can access this rental
+        if ($rental->user_id && (!$user || $rental->user_id !== $user->id)) {
+            abort(403, 'Unauthorized access');
+        }
+
+        $validated = $request->validate([
+            'status' => 'required|in:paid,pending,rejected',
+        ]);
+
+        $rental->update(['status' => $validated['status']]);
+
+        return redirect()->back()->with('success', 'Status pembayaran berhasil diperbarui');
+    }
 }

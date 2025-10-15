@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class BilliardRental extends Model
@@ -99,6 +100,19 @@ class BilliardRental extends Model
                 }
             }
         });
+
+        static::updated(function ($rental) {
+            // Regenerate receipt when status changes
+            if ($rental->isDirty('status') && $rental->receipt_pdf_path) {
+                try {
+                    $receiptService = app(\App\Services\ReceiptService::class);
+                    $receiptService->generateReceipt($rental);
+                } catch (\Exception $e) {
+                    // Log error but don't fail the update
+                    Log::error('Failed to regenerate receipt: ' . $e->getMessage());
+                }
+            }
+        });
     }
 
     /**
@@ -154,9 +168,9 @@ class BilliardRental extends Model
     public function getStatusLabelAttribute(): string
     {
         return match ($this->status) {
-            self::STATUS_PENDING => 'Pending',
-            self::STATUS_PAID => 'Paid',
-            self::STATUS_REJECTED => 'Rejected',
+            self::STATUS_PENDING => 'Menunggu Pembayaran',
+            self::STATUS_PAID => 'Lunas',
+            self::STATUS_REJECTED => 'Ditolak',
             default => 'Unknown',
         };
     }

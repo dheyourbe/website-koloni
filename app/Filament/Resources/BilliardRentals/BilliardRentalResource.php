@@ -18,13 +18,15 @@ class BilliardRentalResource extends Resource
 {
     protected static ?string $model = BilliardRental::class;
 
-    // protected static ?string $navigationIcon = 'heroicon-o-clock';
+    // protected static ?string $navigationIcon = 'heroicon-o-calendar-days';
 
     // protected static ?string $navigationGroup = 'Billiard Management';
-    
-    // protected static ?string $navigationLabel = 'Rentals';
-    
+
+    // protected static ?string $navigationLabel = 'Billiard Rentals';
+
     // protected static ?int $navigationSort = 2;
+
+    // protected static ?string $slug = 'billiard-rentals';
 
     protected static ?string $recordTitleAttribute = 'customer_name';
 
