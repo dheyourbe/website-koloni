@@ -1,5 +1,5 @@
 # Gunakan PHP dengan FPM (FastCGI Process Manager)
-FROM php:8.2-fpm
+FROM php:8.3-fpm
 
 # Install dependency dasar untuk Laravel dan ekstensi yang dibutuhkan
 RUN apt-get update && apt-get install -y \
@@ -27,3 +27,4 @@ EXPOSE 8000
 
 # Jalankan Laravel menggunakan built-in server
 CMD php artisan serve --host=0.0.0.0 --port=8000
+
