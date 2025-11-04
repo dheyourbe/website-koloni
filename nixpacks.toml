@@ -1,2 +1,0 @@
-[phases.install]
-command = "composer install --optimize-autoloader --no-scripts --no-interaction --ignore-platform-req=ext-intl --ignore-platform-req=ext-zip"
