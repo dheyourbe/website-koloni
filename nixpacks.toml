@@ -1,7 +1,7 @@
 [phases.setup]
-# Tambahkan paket sistem yang dibutuhkan oleh ekstensi PHP
-pkgs = ["pkgs.libicu", "pkgs.zlib"]
-
-[build]
-# Tentukan ekstensi PHP yang harus diinstal
-phpExtensions = ["intl", "zip"]
+pkgs = [
+    "pkgs.libicu", 
+    "pkgs.zlib", 
+    "pkgs.php83Extensions.intl", 
+    "pkgs.php83Extensions.zip"
+]
