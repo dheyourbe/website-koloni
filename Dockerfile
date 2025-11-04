@@ -1,44 +1,40 @@
-# 1. Base Image: PHP 8.3 dengan Apache
+# 1. Base image: PHP 8.3 + Apache
 FROM php:8.3-apache
 
-# 2. Install System Dependencies
+# 2. Install system dependencies
 RUN apt-get update && apt-get install -y \
-    libicu-dev \
-    libzip-dev \
-    unzip \
-    git \
-    nodejs \
-    npm \
-    && rm -rf /var/lib/apt/lists/*
+    libicu-dev libzip-dev unzip git curl \
+    && docker-php-ext-configure intl \
+    && docker-php-ext-install pdo_mysql zip intl \
+    && a2enmod rewrite
 
-# 3. Install PHP Extensions
-RUN docker-php-ext-configure intl \
-    && docker-php-ext-install pdo_mysql zip intl
+# 3. Install Composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# 4. Install Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
-# 5. Set working directory
+# 4. Set working directory
 WORKDIR /var/www/html
 
-# 6. Copy project files
+# 5. Copy project files
 COPY . .
 
-# 7. Install PHP dependencies (tanpa dev, optimize autoloader)
-RUN composer install --optimize-autoloader --no-dev --no-interaction --no-scripts
+# 6. Install PHP dependencies
+RUN composer install --no-dev --optimize-autoloader --no-interaction
 
-# 8. Build frontend assets (Vite)
-RUN npm install && npm run build
+# 7. Build frontend (Vite)
+RUN apt-get install -y nodejs npm \
+    && npm install \
+    && npm run build \
+    && rm -rf node_modules
 
-# 9. Set permissions untuk Laravel
+# 8. Permissions
 RUN chown -R www-data:www-data storage bootstrap/cache
 
-# 10. Aktifkan mod_rewrite Apache
-RUN a2enmod rewrite
-
-# 11. Set DocumentRoot ke public/
+# 9. Apache config
 RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf
 
-# 12. Gunakan port Railway ($PORT) dinamis
+# 10. Use Railway dynamic port
+ENV PORT=8080
 EXPOSE 8080
-CMD ["bash", "-c", "sed -i 's/Listen 80/Listen ${PORT}/g' /etc/apache2/ports.conf && apache2-foreground"]
+
+# 11. Start Apache bound to $PORT
+CMD ["/bin/bash", "-c", "sed -i \"s/Listen 80/Listen ${PORT}/\" /etc/apache2/ports.conf && apache2ctl -D FOREGROUND"]
