@@ -38,5 +38,8 @@ RUN chown -R www-data:www-data storage bootstrap/cache
 
 # 10. Aktifkan mod_rewrite Apache (untuk URL cantik Laravel)
 RUN a2enmod rewrite
+# 11. Ubah DocumentRoot Apache ke folder /public
+RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf
+
 
 # Server Apache akan otomatis dimulai oleh base image
