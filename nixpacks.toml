@@ -1,7 +1,2 @@
-[phases.setup]
-pkgs = [
-    "pkgs.libicu", 
-    "pkgs.zlib", 
-    "pkgs.php83Extensions.intl", 
-    "pkgs.php83Extensions.zip"
-]
+[phases.install]
+command = "composer install --optimize-autoloader --no-scripts --no-interaction --ignore-platform-req=ext-intl --ignore-platform-req=ext-zip"
