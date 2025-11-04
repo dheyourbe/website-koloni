@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Widgets\BilliardIncomeStats;
 use App\Filament\Resources\BilliardRentals\BilliardRentalResource;
 use App\Filament\Resources\BilliardTables\BilliardTableResource;
 use App\Filament\Resources\Products\ProductResource;
@@ -49,6 +50,7 @@ class AdminPanelProvider extends PanelProvider
                 Dashboard::class,
             ])
             ->widgets([
+                BilliardIncomeStats::class,
                 StatsOverview::class,
                 UsersChart::class,
                 AccountWidget::class,

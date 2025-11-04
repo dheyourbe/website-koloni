@@ -43,7 +43,7 @@ class ProductForm
                     ->directory('products')
                     ->disk('public')
                     ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
-                    ->maxSize(2048) // 2MB max
+                    ->maxSize(4028) // 2MB max
                     ->openable()
                     ->downloadable()
             ]);

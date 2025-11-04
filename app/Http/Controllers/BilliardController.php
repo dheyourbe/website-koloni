@@ -69,7 +69,7 @@ class BilliardController extends Controller
             // Check availability
             if (!$table->isAvailableAt($rentalStart, $rentalEnd)) {
                 return back()->withErrors(['rental_start' => 'Table is not available at the selected time.'])
-                           ->withInput();
+                    ->withInput();
             }
 
             // Calculate pricing
@@ -103,11 +103,10 @@ class BilliardController extends Controller
 
             return redirect()->route('billiard.success', $rental)
                 ->with('success', 'Booking created successfully! Receipt has been sent to your WhatsApp.');
-
         } catch (\Exception $e) {
             DB::rollback();
             return back()->withErrors(['error' => 'Failed to create booking: ' . $e->getMessage()])
-                       ->withInput();
+                ->withInput();
         }
     }
 
@@ -184,7 +183,7 @@ class BilliardController extends Controller
 
                 $response['available'] = $isAvailable;
                 if (!$isAvailable) {
-                    $response['message'] = 'Table is not available for the selected time period';
+                    $response['message'] = 'Meja tidak tersedia untuk jam yang dipilih. Silakan ubah waktu sewa Anda.';
                 }
             } catch (\Exception $e) {
                 $response['available'] = false;

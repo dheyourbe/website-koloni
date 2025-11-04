@@ -25,9 +25,9 @@
                 <div class="w-full px-4 md:px-10">
                     <div class="w-[100%] mx-auto overflow-hidden h-[20rem] md:h-[45rem]">
                         <div class="w-full h-full relative" id="slide">
-                            <img id="img1" src="{{ asset('assets/images/bg.png') }}" alt="background"
+                            <img id="img1" src="{{ asset('assets/images/bg-3.JPG') }}" alt="background"
                                 class="absolute rounded-lg inset-0 w-full h-full object-cover transition-transform duration-700 ease-in-out translate-x-0" />
-                            <img id="img2" src="{{ asset('assets/images/bg-2.png') }}" alt="background2"
+                            <img id="img2" src="{{ asset('assets/images/bg-4.JPG') }}" alt="background2"
                                 class="absolute rounded-lg inset-0 w-full h-full object-cover transition-transform duration-700 ease-in-out translate-x-full" />
                         </div>
                     </div>
@@ -98,88 +98,86 @@
                     <!-- Drink Products Carousel -->
                     <div class="product-carousel transition-opacity duration-500 opacity-100" id="carousel-drink">
                         @if(count($drinkProducts) > 0)
-                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                @foreach($drinkProducts as $product)
-                                    <div class="product-card group bg-white rounded-lg transition-all duration-300 overflow-hidden">
-                                        <div class="aspect-square overflow-hidden bg-gray-100 relative">
-                                            @if($product->photo)
-                                                <img
-                                                    src="{{ asset('storage/' . $product->photo) }}"
-                                                    alt="{{ $product->title }}"
-                                                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                                    onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgZmlsbD0iI0Y5RkFGQiIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzZCNzI4MCI+Tm8gSW1hZ2U8L3RleHQ+PC9zdmc+'"
-                                                />
-                                            @else
-                                                <div class="w-full h-full bg-gray-100 flex items-center justify-center">
-                                                    <div class="text-center">
-                                                        <i class="ri-image-line text-6xl text-gray-400 mb-2"></i>
-                                                        <p class="text-gray-500">No Image</p>
-                                                    </div>
-                                                </div>
-                                            @endif
-                                        </div>
-                                        <div class="p-4">
-                                            <h5 class="text-lg font-bold text-[#1B2B28] mb-1">{{ $product->title }}</h5>
-                                            <p class="text-sm text-gray-600 mb-3 line-clamp-2">{{ $product->description ?? 'Nikmati rasa istimewa dari produk pilihan kami' }}</p>
-                                            <div class="flex items-center justify-between">
-                                                <span class="text-lg font-bold text-[#701D0D]">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
-                                                <button class="bg-[#1B2B28] text-white px-3 py-1 rounded-full text-sm hover:bg-[#701D0D] transition-colors">
-                                                    <i class="ri-shopping-cart-line"></i>
-                                                </button>
-                                            </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            @foreach($drinkProducts as $product)
+                            <div class="product-card group bg-white rounded-lg transition-all duration-300 overflow-hidden">
+                                <div class="aspect-square overflow-hidden bg-gray-100 relative">
+                                    @if($product->photo)
+                                    <img
+                                        src="{{ asset('storage/' . $product->photo) }}"
+                                        alt="{{ $product->title }}"
+                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                        onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgZmlsbD0iI0Y5RkFGQiIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzZCNzI4MCI+Tm8gSW1hZ2U8L3RleHQ+PC9zdmc+'" />
+                                    @else
+                                    <div class="w-full h-full bg-gray-100 flex items-center justify-center">
+                                        <div class="text-center">
+                                            <i class="ri-image-line text-6xl text-gray-400 mb-2"></i>
+                                            <p class="text-gray-500">No Image</p>
                                         </div>
                                     </div>
-                                @endforeach
+                                    @endif
+                                </div>
+                                <div class="p-4">
+                                    <h5 class="text-lg font-bold text-[#1B2B28] mb-1">{{ $product->title }}</h5>
+                                    <p class="text-sm text-gray-600 mb-3 line-clamp-2">{{ $product->description ?? 'Nikmati rasa istimewa dari produk pilihan kami' }}</p>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-lg font-bold text-[#701D0D]">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
+                                        <!-- <button class="bg-[#1B2B28] text-white px-3 py-1 rounded-full text-sm hover:bg-[#701D0D] transition-colors">
+                                            <i class="ri-shopping-cart-line"></i>
+                                        </button> -->
+                                    </div>
+                                </div>
                             </div>
+                            @endforeach
+                        </div>
                         @else
-                            <div class="flex flex-col items-center justify-center py-16">
-                                <i class="ri-drinks-2-line text-6xl text-gray-300 mb-4"></i>
-                                <p class="text-gray-500 text-lg">Belum ada produk minuman tersedia</p>
-                            </div>
+                        <div class="flex flex-col items-center justify-center py-16">
+                            <i class="ri-drinks-2-line text-6xl text-gray-300 mb-4"></i>
+                            <p class="text-gray-500 text-lg">Belum ada produk minuman tersedia</p>
+                        </div>
                         @endif
                     </div>
 
                     <!-- Food Products Carousel -->
                     <div class="product-carousel transition-opacity duration-500 opacity-0 pointer-events-none absolute inset-0" id="carousel-food">
                         @if(count($foodProducts) > 0)
-                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                @foreach($foodProducts as $product)
-                                    <div class="product-card group bg-white rounded-lg transition-all duration-300 overflow-hidden">
-                                        <div class="aspect-square overflow-hidden bg-gray-100 relative">
-                                            @if($product->photo)
-                                                <img
-                                                    src="{{ asset('storage/' . $product->photo) }}"
-                                                    alt="{{ $product->title }}"
-                                                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                                    onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgZmlsbD0iI0Y5RkFGQiIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzZCNzI4MCI+Tm8gSW1hZ2U8L3RleHQ+PC9zdmc+'"
-                                                />
-                                            @else
-                                                <div class="w-full h-full bg-gray-100 flex items-center justify-center">
-                                                    <div class="text-center">
-                                                        <i class="ri-image-line text-6xl text-gray-400 mb-2"></i>
-                                                        <p class="text-gray-500">No Image</p>
-                                                    </div>
-                                                </div>
-                                            @endif
-                                        </div>
-                                        <div class="p-4">
-                                            <h5 class="text-lg font-bold text-[#1B2B28] mb-1">{{ $product->title }}</h5>
-                                            <p class="text-sm text-gray-600 mb-3 line-clamp-2">{{ $product->description ?? 'Nikmati rasa istimewa dari produk pilihan kami' }}</p>
-                                            <div class="flex items-center justify-between">
-                                                <span class="text-lg font-bold text-[#701D0D]">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
-                                                <button class="bg-[#1B2B28] text-white px-3 py-1 rounded-full text-sm hover:bg-[#701D0D] transition-colors">
-                                                    <i class="ri-shopping-cart-line"></i>
-                                                </button>
-                                            </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            @foreach($foodProducts as $product)
+                            <div class="product-card group bg-white rounded-lg transition-all duration-300 overflow-hidden">
+                                <div class="aspect-square overflow-hidden bg-gray-100 relative">
+                                    @if($product->photo)
+                                    <img
+                                        src="{{ asset('storage/' . $product->photo) }}"
+                                        alt="{{ $product->title }}"
+                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                        onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgZmlsbD0iI0Y5RkFGQiIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzZCNzI4MCI+Tm8gSW1hZ2U8L3RleHQ+PC9zdmc+'" />
+                                    @else
+                                    <div class="w-full h-full bg-gray-100 flex items-center justify-center">
+                                        <div class="text-center">
+                                            <i class="ri-image-line text-6xl text-gray-400 mb-2"></i>
+                                            <p class="text-gray-500">No Image</p>
                                         </div>
                                     </div>
-                                @endforeach
+                                    @endif
+                                </div>
+                                <div class="p-4">
+                                    <h5 class="text-lg font-bold text-[#1B2B28] mb-1">{{ $product->title }}</h5>
+                                    <p class="text-sm text-gray-600 mb-3 line-clamp-2">{{ $product->description ?? 'Nikmati rasa istimewa dari produk pilihan kami' }}</p>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-lg font-bold text-[#701D0D]">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
+                                        <!-- <button class="bg-[#1B2B28] text-white px-3 py-1 rounded-full text-sm hover:bg-[#701D0D] transition-colors">
+                                            <i class="ri-shopping-cart-line"></i>
+                                        </button> -->
+                                    </div>
+                                </div>
                             </div>
+                            @endforeach
+                        </div>
                         @else
-                            <div class="flex flex-col items-center justify-center py-16">
-                                <i class="ri-bowl-line text-6xl text-gray-300 mb-4"></i>
-                                <p class="text-gray-500 text-lg">Belum ada produk makanan tersedia</p>
-                            </div>
+                        <div class="flex flex-col items-center justify-center py-16">
+                            <i class="ri-bowl-line text-6xl text-gray-300 mb-4"></i>
+                            <p class="text-gray-500 text-lg">Belum ada produk makanan tersedia</p>
+                        </div>
                         @endif
                     </div>
                 </div>
@@ -260,34 +258,68 @@
     </main>
 
     <footer class="garden text-white">
-        <div class="bg-[#1B2B28] max-w-[1600px] mx-auto pb-10">
-            <div class="max-w-7xl mx-auto px-6 flex flex-wrap justify-between gap-6 md:gap-8 py-32">
-                <div class="md:col-span-2 flex flex-wrap gap-16">
-                    <div class="flex flex-col gap-2">
-                        <span class="text-sm md:text-lg gtbold">Alamat: 123 Coffee Street</span>
-                        <span class="text-xs md:text-lg">Telp: +62 812 3456 7890</span>
-                        <span class="text-xs md:text-lg">Email: info@coffeeshop.com</span>
-                    </div>
-                    <div class="flex flex-col gap-2">
-                        <span class="gtbold text-sm md:text-lg">info Coffee</span>
-                        <span class="text-xs md:text-lg">Follow kami di IG</span>
-                        <span class="text-xs md:text-lg">Follow kami di FB</span>
-                    </div>
+        <div class="bg-[#1B2B28] max-w-[1600px] mx-auto py-4 px-6 md:px-10">
+            <div
+                class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 border-b border-gray-700 pb-4">
+                <!-- Kolom Kiri -->
+                <div class="flex flex-col gap-1 text-center md:text-left w-full md:w-1/3">
+                    <h3 class="gtbold text-base md:text-lg mb-1">Alamat</h3>
+                    <p class="text-xs md:text-sm leading-snug">
+                        Komplek Perkantoran Marinatama, Jl. Mangga Dua Raya Jl. Gn. Sahari
+                        No.2 Blok C No. 1-3, Pademangan Bar., Kec. Pademangan, Jkt Utara,
+                        Daerah Khusus Ibukota Jakarta 14440
+                    </p>
+                    <p class="text-xs md:text-sm leading-snug">Telp: +62 812 3456 7890</p>
+                    <p class="text-xs md:text-sm leading-snug">Email: info@coffeeshop.com</p>
                 </div>
 
-                <div class="flex flex-row items-center md:items-start max-sm:flex-col">
-                    <span class="text-xs md:text-lg">© 2025 KoloniCoffee.</span>
-                    <span class="ml-2 max-sm:ml-0 text-xs md:text-lg">All Rights Reserved.</span>
+                <!-- Kolom Tengah (Logo) -->
+                <div class="flex flex-col items-center justify-center w-full md:w-1/3">
+                    <img
+                        src="{{ asset('assets/images/Logo 1 1.png') }}"
+                        alt="Logo"
+                        class="h-20 object-contain mb-1" />
+                    <p class="text-xs text-gray-300 mt-1">Koloni Coffee</p>
+                </div>
+
+                <!-- Kolom Kanan (Info Coffee + Instagram) -->
+                <div class="flex flex-col items-center md:items-end gap-2 w-full md:w-1/3">
+                    <h3 class="gtbold text-base md:text-lg mb-1">Info Coffee</h3>
+                    <p class="text-xs md:text-sm leading-snug">Follow kami di Instagram</p>
+
+                    <!-- Link Instagram -->
+                    <a
+                        href="https://www.instagram.com/kolonicafepool/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="flex items-center justify-center md:justify-end gap-2 text-xs md:text-sm text-gray-300 hover:text-[#c0a080] transition">
+                        <!-- Ikon Instagram (SVG) -->
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-5 h-5">
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M7.5 3h9a4.5 4.5 0 014.5 4.5v9a4.5 4.5 0 01-4.5 4.5h-9A4.5 4.5 0 013 16.5v-9A4.5 4.5 0 017.5 3zm9 4.5h.008v.008H16.5V7.5zM12 9a3 3 0 100 6 3 3 0 000-6z" />
+                        </svg>
+                        @kolonicafepool
+                    </a>
                 </div>
             </div>
 
-            <div class="flex-1 flex items-center justify-center">
-                <div class="logo h-20 w-30">
-                    <img src="{{ asset('assets/images/logo_white.png') }}" alt="Logoshop" />
-                </div>
+            <!-- Copyright -->
+            <div
+                class="max-w-6xl mx-auto flex flex-col md:flex-row justify-center items-center pt-3 text-gray-300 text-xs md:text-sm text-center">
+                <p>© 2025 KoloniCoffee. All Rights Reserved.</p>
             </div>
         </div>
     </footer>
+
+
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

@@ -49,7 +49,7 @@
                             <p class="text-sm text-gray-500 gtregular">Meja</p>
                             <p class="text-lg font-semibold gtbold text-gray-900">Meja {{ $rental->billiardTable->table_number }}</p>
                             @if($rental->billiardTable->name)
-                                <p class="text-sm text-gray-600 gtregular">{{ $rental->billiardTable->name }}</p>
+                            <p class="text-sm text-gray-600 gtregular">{{ $rental->billiardTable->name }}</p>
                             @endif
                         </div>
                     </div>
@@ -84,10 +84,10 @@
                             <p class="text-sm text-gray-500 gtregular">Total Pembayaran</p>
                             <p class="text-2xl font-bold gtbold text-[#1B2B28]">Rp {{ number_format($rental->total_amount, 0, ',', '.') }}</p>
                             @if($rental->discount_amount > 0)
-                                <p class="text-sm text-green-600 gtmedium flex items-center gap-1">
-                                    <i class="ri-vip-crown-fill text-yellow-500"></i>
-                                    Hemat Rp {{ number_format($rental->discount_amount, 0, ',', '.') }} (diskon member)
-                                </p>
+                            <p class="text-sm text-green-600 gtmedium flex items-center gap-1">
+                                <i class="ri-vip-crown-fill text-yellow-500"></i>
+                                Hemat Rp {{ number_format($rental->discount_amount, 0, ',', '.') }} (diskon member)
+                            </p>
                             @endif
                         </div>
                     </div>
@@ -99,16 +99,16 @@
                         <div>
                             <p class="text-sm text-gray-500 gtregular">Status</p>
                             <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium gtmedium
-                                @if($rental->status === 'paid') bg-green-100 text-green-800
-                                @elseif($rental->status === 'rejected') bg-red-100 text-red-800
-                                @else bg-yellow-100 text-yellow-800
-                                @endif">
+                            @if($rental->status === 'paid') bg-green-100 text-green-800
+                            @elseif($rental->status === 'rejected') bg-red-100 text-red-800
+                            @else bg-yellow-100 text-yellow-800
+                            @endif">
                                 @if($rental->status === 'paid')
-                                    <i class="ri-checkbox-circle-fill mr-1"></i> Lunas
+                                <i class="ri-checkbox-circle-fill mr-1"></i> Lunas
                                 @elseif($rental->status === 'rejected')
-                                    <i class="ri-close-circle-fill mr-1"></i> Ditolak
+                                <i class="ri-close-circle-fill mr-1"></i> Ditolak
                                 @else
-                                    <i class="ri-time-fill mr-1"></i> Menunggu Pembayaran
+                                <i class="ri-time-fill mr-1"></i> Menunggu Pembayaran
                                 @endif
                             </span>
                         </div>
@@ -117,7 +117,12 @@
             </div>
         </div>
 
-        <!-- Payment Status Info -->
+        <!-- ===================================================================== -->
+        <!-- [AWAL BLOK BARU] Tampil Hanya Jika Menunggu Pembayaran -->
+        <!-- ===================================================================== -->
+        @if($rental->status === 'pending')
+
+        <!-- Payment Status Info (Blok Biru yang sudah ada) -->
         <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
             <div class="flex items-start gap-3">
                 <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white flex-shrink-0">
@@ -132,48 +137,116 @@
             </div>
         </div>
 
-        <!-- WhatsApp Receipt -->
-        @if($rental->customer_whatsapp && $whatsappLink)
-            <div class="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
-                <div class="flex items-start gap-3">
-                    <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white flex-shrink-0">
-                        <i class="ri-whatsapp-line text-sm"></i>
-                    </div>
-                    <div class="flex-1">
-                        <h3 class="text-sm font-medium gtbold text-green-800 mb-1">Struk Dikirim</h3>
-                        <p class="text-sm text-green-700 gtregular mb-2">
-                            Struk pembayaran telah dikirim ke WhatsApp Anda: {{ $rental->customer_whatsapp }}
-                        </p>
-                        <a href="{{ $whatsappLink }}" target="_blank" rel="noopener"
-                           class="inline-flex items-center text-sm font-medium text-green-700 hover:text-green-800 gtmedium">
-                            <i class="ri-external-link-line mr-1"></i>
-                            Buka WhatsApp
-                        </a>
-                    </div>
+        <!-- [BARU] Petunjuk Pembayaran & Link WA Admin -->
+        <div class="bg-white border border-gray-200 rounded-lg p-6 mb-6">
+            <h2 class="text-xl font-semibold gtbold text-[#1B2B28] mb-5 flex items-center gap-2">
+                <i class="ri-bank-card-line"></i>
+                Petunjuk Pembayaran
+            </h2>
+            <p class="text-sm text-gray-600 gtregular mb-4">
+                Silakan lakukan transfer ke rekening berikut untuk menyelesaikan pemesanan Anda:
+            </p>
+
+            {{-- !!! GANTI DETAIL BANK DI BAWAH INI !!! --}}
+            <div class="space-y-3 border border-gray-100 bg-gray-50 rounded-lg p-4">
+                <div class="flex justify-between items-center">
+                    <span class="text-sm text-gray-500 gtregular">Bank</span>
+                    <span class="text-lg font-semibold gtbold text-gray-900">BCA (Contoh)</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-sm text-gray-500 gtregular">Nomor Rekening</span>
+                    <span class="text-lg font-semibold gtbold text-gray-900">123-456-7890</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-sm text-gray-500 gtregular">Atas Nama</span>
+                    <span class="text-lg font-semibold gtbold text-gray-900">PT. Koloni Billiard</span>
+                </div>
+                <hr class="!my-4">
+                <div class="flex justify-between items-center">
+                    <span class="text-sm text-gray-500 gtregular">Nominal Transfer</span>
+                    <span class="text-2xl font-bold gtbold text-[#1B2B28]">Rp {{ number_format($rental->total_amount, 0, ',', '.') }}</span>
                 </div>
             </div>
+
+            <p class="text-xs text-gray-500 gtregular mt-3 text-center">
+                *Harap transfer sesuai dengan nominal total untuk kemudahan verifikasi.
+            </p>
+
+            <hr class="my-6 border-gray-100">
+
+            {{-- [BARU] Logika untuk Link WA Admin --}}
+            @php
+            // !!! PENTING: Ganti nomor WhatsApp admin di sini (format 62)
+            $adminWhatsapp = '6287820497032'; // <-- GANTI INI
+
+                $message="Halo Admin, saya ingin konfirmasi pembayaran untuk booking billiard:\n\n" . "No. Transaksi: " . $rental->transaction_number . "\n" .
+                "Nama: " . $rental->customer_name . "\n" .
+                "Total: Rp " . number_format($rental->total_amount, 0, ',', '.') . "\n\n" .
+                "Berikut saya lampirkan bukti transfer. Terima kasih.";
+
+                $whatsappConfirmUrl = 'https://wa.me/' . $adminWhatsapp . '?text=' . urlencode($message);
+                @endphp
+
+                <p class="text-sm text-gray-600 gtregular mb-3 text-center">
+                    Setelah melakukan transfer, silakan kirim bukti pembayaran Anda ke Admin:
+                </p>
+
+                <!-- [BARU] Tombol WA Admin -->
+                <a href="{{ $whatsappConfirmUrl }}" target="_blank" rel="noopener"
+                    class="flex items-center justify-center w-full gap-2 bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full font-medium transition-all gtmedium">
+                    <i class="ri-whatsapp-line"></i>
+                    Kirim Bukti Pembayaran ke Admin
+                </a>
+        </div>
+
+        @endif
+        <!-- ===================================================================== -->
+        <!-- [AKHIR BLOK BARU] -->
+        <!-- ===================================================================== -->
+
+
+        <!-- WhatsApp Receipt (Blok Hijau yang sudah ada) -->
+        @if($rental->customer_whatsapp && $whatsappLink)
+        <div class="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
+            <div class="flex items-start gap-3">
+                <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white flex-shrink-0">
+                    <i class="ri-whatsapp-line text-sm"></i>
+                </div>
+                <div class="flex-1">
+                    <h3 class="text-sm font-medium gtbold text-green-800 mb-1">Struk Dikirim ke Pelanggan</h3>
+                    <p class="text-sm text-green-700 gtregular mb-2">
+                        Struk pembayaran telah dikirim ke WhatsApp Anda: {{ $rental->customer_whatsapp }}
+                    </p>
+                    <a href="{{ $whatsappLink }}" target="_blank" rel="noopener"
+                        class="inline-flex items-center text-sm font-medium text-green-700 hover:text-green-800 gtmedium">
+                        <i class="ri-external-link-line mr-1"></i>
+                        Buka WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
         @endif
 
         <!-- Actions -->
         <div class="flex flex-col sm:flex-row gap-4 mb-8">
             @if($rental->receipt_pdf_path)
-                <a href="{{ route('billiard.receipt.download', $rental) }}"
-                   class="flex items-center justify-center gap-2 border-2 border-gray-300 text-gray-700 px-6 py-3 rounded-full font-medium transition-all hover:bg-gray-50 gtmedium">
-                    <i class="ri-download-line"></i>
-                    Unduh Struk (PDF)
-                </a>
+            <a href="{{ route('billiard.receipt.download', $rental) }}"
+                class="flex items-center justify-center gap-2 border-2 border-gray-300 text-gray-700 px-6 py-3 rounded-full font-medium transition-all hover:bg-gray-50 gtmedium">
+                <i class="ri-download-line"></i>
+                Unduh Struk (PDF)
+            </a>
             @endif
 
             @auth
-                <a href="{{ route('billiard.history') }}"
-                   class="flex items-center justify-center gap-2 bg-[#1B2B28] hover:bg-[#701D0D] text-white px-6 py-3 rounded-full font-medium transition-all gtmedium">
-                    <i class="ri-history-line"></i>
-                    Lihat Riwayat Saya
-                </a>
+            <a href="{{ route('billiard.history') }}"
+                class="flex items-center justify-center gap-2 bg-[#1B2B28] hover:bg-[#701D0D] text-white px-6 py-3 rounded-full font-medium transition-all gtmedium">
+                <i class="ri-history-line"></i>
+                Lihat Riwayat Saya
+            </a>
             @endauth
 
             <a href="{{ route('billiard.index') }}"
-               class="flex items-center justify-center gap-2 border-2 border-[#1B2B28] text-[#1B2B28] px-6 py-3 rounded-full font-medium transition-all hover:bg-[#1B2B28] hover:text-white gtmedium">
+                class="flex items-center justify-center gap-2 border-2 border-[#1B2B28] text-[#1B2B28] px-6 py-3 rounded-full font-medium transition-all hover:bg-[#1B2B28] hover:text-white gtmedium">
                 <i class="ri-add-line"></i>
                 Pesan Meja Lain
             </a>
@@ -197,12 +270,22 @@
                 </div>
 
                 <div class="flex items-start gap-3">
-                    <div class="w-8 h-8 bg-[#1B2B28] rounded-full flex items-center justify-center text-white flex-shrink-0">
-                        <i class="ri-map-pin-line text-sm"></i>
-                    </div>
+
                     <div>
-                        <p class="text-sm font-medium gtbold text-gray-900">Kunjungi Lokasi</p>
-                        <p class="text-sm text-gray-600 gtregular">123 Coffee Street</p>
+                        <a href="https://maps.app.goo.gl/2Kjvh8MfKZBZUPS96"
+                            target="_blank"
+                            rel="noopener"
+                            class="flex items-start gap-3 transition-opacity hover:opacity-80">
+                            <div class="w-8 h-8 bg-[#1B2B28] rounded-full flex items-center justify-center text-white flex-shrink-0">
+                                <i class="ri-map-pin-line text-sm"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium gtbold text-gray-900">Kunjungi Lokasi</p>
+                                {{-- !!! GANTI ALAMAT DI SINI !!! --}}
+                                <p class="text-sm text-gray-600 gtregular">123 Coffee Street</p>
+                            </div>
+                        </a>
+
                     </div>
                 </div>
             </div>
@@ -218,6 +301,8 @@
         </div>
     </main>
 
+
     <x-footer />
 </body>
+
 </html>

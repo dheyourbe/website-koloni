@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\BilliardRental; // <-- PENTING: Tambahkan import ini
+use Carbon\Carbon; // <-- PENTING: Tambahkan import ini
 
 class BilliardTable extends Model
 {
@@ -25,46 +27,47 @@ class BilliardTable extends Model
     }
 
     /**
-     * Temporary method to always return false (table is available)
-     * TODO: Replace with actual occupancy check when system is implemented
+     * TODO: Implementasi ini juga harusnya mengecek rental_start
      */
     public function isOccupied(): bool
     {
-        // Original implementation commented out:
-        /*
-        return $this->hasOne(BilliardRental::class)
-            ->where('status', 'paid')
-            ->where('rental_end', '>', now())
+        // Cek apakah ada rental yang SEDANG BERLANGSUNG SAAT INI
+        return $this->rentals()
+            ->whereIn('status', [BilliardRental::STATUS_PAID, BilliardRental::STATUS_PENDING])
+            ->where('rental_start', '<=', now()) // Sudah dimulai
+            ->where('rental_end', '>', now())  // Belum selesai
             ->exists();
-        */
-
-        return false;
     }
 
     /**
-     * Temporary method to always return true (table is available)
-     * TODO: Replace with actual availability check when system is implemented
+     * FUNGSI YANG DIPERBAIKI:
+     * Cek ketersediaan meja pada rentang waktu yang diminta.
      */
-    public function isAvailableAt(\Carbon\Carbon $startTime, \Carbon\Carbon $endTime): bool
+    public function isAvailableAt(Carbon $startTime, Carbon $endTime): bool
     {
-        // Original implementation commented out:
-        /*
-        // Check for any paid bookings that overlap with the requested time
+        // Ambil status aktif dari model BilliardRental
+        // Kita harus mengecek 'pending' DAN 'paid',
+        // karena 'pending' berarti sudah dibooking tapi belum dibayar.
+        $activeStatuses = [
+            BilliardRental::STATUS_PENDING,
+            BilliardRental::STATUS_PAID,
+        ];
+
+        // Cek untuk setiap booking yang tumpang tindih (konflik)
         $conflictingBookings = $this->rentals()
-            ->where('status', 'paid')
+            ->whereIn('status', $activeStatuses) // Hanya cek booking yang aktif
             ->where(function ($query) use ($startTime, $endTime) {
-                // Booking starts before our end time and ends after our start time
-                $query->where(function ($q) use ($startTime, $endTime) {
-                    $q->where('rental_start', '<', $endTime)
-                      ->where('rental_end', '>', $startTime);
-                });
+                // Logika overlap:
+                // (Waktu Mulai Lama < Waktu Selesai Baru) DAN (Waktu Selesai Lama > Waktu Mulai Baru)
+                $query->where('rental_start', '<', $endTime)
+                    ->where('rental_end', '>', $startTime);
             })
-            ->exists();
+            ->exists(); // 'exists()' adalah cara tercepat untuk cek
 
+        // Kembalikan kebalikannya:
+        // Jika ada konflik (true), maka meja TIDAK tersedia (return false)
+        // Jika tidak ada konflik (false), maka meja TERSEDIA (return true)
         return !$conflictingBookings;
-        */
-
-        return true;
     }
 
     /**
