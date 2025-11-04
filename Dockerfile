@@ -1,55 +1,44 @@
-# 1. Base Image
+# 1. Base Image: PHP 8.3 dengan Apache
 FROM php:8.3-apache
 
-# 2. System dependencies
+# 2. Install System Dependencies
 RUN apt-get update && apt-get install -y \
     libicu-dev \
     libzip-dev \
     unzip \
+    git \
+    nodejs \
+    npm \
     && rm -rf /var/lib/apt/lists/*
 
-# 3. PHP extensions
-RUN docker-php-ext-configure intl
-RUN docker-php-ext-install pdo_mysql zip intl
+# 3. Install PHP Extensions
+RUN docker-php-ext-configure intl \
+    && docker-php-ext-install pdo_mysql zip intl
 
-# 4. Composer
+# 4. Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# 5. Working directory
+# 5. Set working directory
 WORKDIR /var/www/html
 
 # 6. Copy project files
 COPY . .
 
-# 7. Composer dependencies
-RUN composer install --optimize-autoloader --no-dev --no-interaction
+# 7. Install PHP dependencies (tanpa dev, optimize autoloader)
+RUN composer install --optimize-autoloader --no-dev --no-interaction --no-scripts
 
-# 8. Laravel optimizations
-RUN php artisan key:generate --force || true
-RUN php artisan config:cache || true
-RUN php artisan route:cache || true
-RUN php artisan view:cache || true
+# 8. Build frontend assets (Vite)
+RUN npm install && npm run build
 
-# 9. Node build
-RUN apt-get update && apt-get install -y nodejs npm && rm -rf /var/lib/apt/lists/*
-RUN npm install
-RUN npm run build
-
-# 10. Permissions
+# 9. Set permissions untuk Laravel
 RUN chown -R www-data:www-data storage bootstrap/cache
-RUN chmod -R 775 storage bootstrap/cache
 
-# 11. Enable mod_rewrite
+# 10. Aktifkan mod_rewrite Apache
 RUN a2enmod rewrite
 
-# 12. Change DocumentRoot to /public
+# 11. Set DocumentRoot ke public/
 RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf
 
-# 13. Set port for Railway
-ENV PORT=8080
-RUN sed -i "s/Listen 80/Listen ${PORT}/g" /etc/apache2/ports.conf
-RUN sed -i "s/:80/:${PORT}/g" /etc/apache2/sites-available/000-default.conf
-EXPOSE ${PORT}
-
-# 14. Start Apache
-CMD ["apache2-foreground"]
+# 12. Gunakan port Railway ($PORT) dinamis
+EXPOSE 8080
+CMD ["bash", "-c", "sed -i 's/Listen 80/Listen ${PORT}/g' /etc/apache2/ports.conf && apache2-foreground"]
