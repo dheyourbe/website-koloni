@@ -1,0 +1,11 @@
+# [phases.setup]
+# Fase ini mengatur alat yang dibutuhkan.
+# (Anda sudah benar di sini, php84 itu bagus!)
+[phases.setup]
+nixPkgs = ["php84", "nginx", "libmysqlclient", "composer", "nodejs_18", "npm-9_x"]
+
+# [phases.build]
+# Fase ini berjalan SETELAH 'npm install'
+# Ini adalah tempat yang tepat untuk 'npm run build'
+[phases.build]
+cmds = ["npm run build"]
