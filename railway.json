@@ -1,0 +1,10 @@
+{
+    "build": {
+        "builder": "Nixpacks",
+        "phases": {
+            "setup": {
+                "nixPkgs": ["php82Extensions.intl", "php82Extensions.zip"]
+            }
+        }
+    }
+}
