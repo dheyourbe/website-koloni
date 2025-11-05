@@ -1,16 +1,13 @@
 {
+    "$schema": "https://railway.app/railway.schema.json",
     "build": {
-        "builder": "heroku/php",
-        "php": {
-            "version": "8.3",
-            "extensions": [
-                "intl",
-                "zip",
-                "pdo_mysql",
-                "bcmath",
-                "mbstring",
-                "exif"
-            ]
-        }
+        "builder": "NIXPACKS",
+        "buildCommand": "composer install --optimize-autoloader --no-interaction --ignore-platform-req=ext-intl --ignore-platform-req=ext-zip"
+    },
+    "deploy": {
+        "startCommand": "php artisan serve --host=0.0.0.0 --port=$PORT"
+    },
+    "variables": {
+        "PHP_VERSION": "8.4"
     }
 }
