@@ -1,7 +1,16 @@
 {
     "build": {
+        "builder": "heroku/php",
         "php": {
-            "extensions": ["intl", "zip"]
+            "version": "8.3",
+            "extensions": [
+                "intl",
+                "zip",
+                "pdo_mysql",
+                "bcmath",
+                "mbstring",
+                "exif"
+            ]
         }
     }
 }
