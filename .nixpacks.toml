@@ -1,2 +1,3 @@
 [phases.setup]
 nixPkgs = ["php84", "nginx", "libmysqlclient", "composer", "nodejs_18", "npm-9_x"]
+cmds = ["npm run build"]
