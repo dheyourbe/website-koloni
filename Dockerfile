@@ -33,5 +33,10 @@ RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available
 # 10. Dynamic port from Railway
 EXPOSE ${PORT}
 
+RUN echo "Container build complete, ready to start Apache"
 # 11. Start Apache
-CMD ["bash", "-c", "sed -i \"s/Listen 80/Listen ${PORT}/\" /etc/apache2/ports.conf && apache2-foreground"]
+CMD bash -c 'if [ -z "$PORT" ]; then PORT=8080; fi \
+  && sed -i "s/Listen 80/Listen ${PORT}/" /etc/apache2/ports.conf \
+  && echo "Apache will listen on port ${PORT}" \
+  && apache2-foreground'
+
