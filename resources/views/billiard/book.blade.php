@@ -7,7 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
-    <link rel="stylesheet" href="{{ asset('assets/styles/style.css') }}" />
+    <link rel="stylesheet" href="https://steadfast-light-caffe.up.railway.app/build/assets/app-eNwG1Jbd.css" />
     <title>Pesan Meja Billiard - {{ config('app.name', 'KoloniCoffee') }}</title>
 </head>
 
@@ -49,45 +49,45 @@
                 </div>
                 <div class="bg-white/10 p-4 rounded-lg">
                     @auth
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm gtregular opacity-90 flex items-center gap-1">
-                                    <i class="ri-vip-crown-fill text-yellow-400"></i>
-                                    Harga Member
-                                </p>
-                                <p class="text-xl font-bold gtbold">Rp 108.000</p>
-                                <p class="text-xs gtregular opacity-75">per jam (hemat 10%)</p>
-                            </div>
-                            <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                                <i class="ri-gift-line text-xl text-yellow-400"></i>
-                            </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm gtregular opacity-90 flex items-center gap-1">
+                                <i class="ri-vip-crown-fill text-yellow-400"></i>
+                                Harga Member
+                            </p>
+                            <p class="text-xl font-bold gtbold">Rp 108.000</p>
+                            <p class="text-xs gtregular opacity-75">per jam (hemat 10%)</p>
                         </div>
+                        <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+                            <i class="ri-gift-line text-xl text-yellow-400"></i>
+                        </div>
+                    </div>
                     @else
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm gtregular opacity-90">Belum Member?</p>
-                                <p class="text-lg font-medium gtbold">Dapatkan Diskon 10%</p>
-                                <p class="text-xs gtregular opacity-75">Daftar sekarang!</p>
-                            </div>
-                            <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                                <i class="ri-user-add-line text-xl"></i>
-                            </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm gtregular opacity-90">Belum Member?</p>
+                            <p class="text-lg font-medium gtbold">Dapatkan Diskon 10%</p>
+                            <p class="text-xs gtregular opacity-75">Daftar sekarang!</p>
                         </div>
+                        <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+                            <i class="ri-user-add-line text-xl"></i>
+                        </div>
+                    </div>
                     @endauth
                 </div>
             </div>
 
             @guest
-                <div class="bg-yellow-400/20 border border-yellow-400/30 rounded-md p-3 mt-4 flex items-center gap-3">
-                    <i class="ri-lightbulb-line text-yellow-400 text-xl"></i>
-                    <p class="text-sm gtregular">
-                        <span class="font-medium gtbold">💡 Hemat Uang!</span>
-                        <a href="{{ route('register') }}" class="underline font-medium text-yellow-300 hover:text-yellow-200">Daftar gratis</a>
-                        atau
-                        <a href="{{ route('login') }}" class="underline font-medium text-yellow-300 hover:text-yellow-200">login</a>
-                        untuk dapatkan diskon 10% untuk semua pemesanan billiard!
-                    </p>
-                </div>
+            <div class="bg-yellow-400/20 border border-yellow-400/30 rounded-md p-3 mt-4 flex items-center gap-3">
+                <i class="ri-lightbulb-line text-yellow-400 text-xl"></i>
+                <p class="text-sm gtregular">
+                    <span class="font-medium gtbold">💡 Hemat Uang!</span>
+                    <a href="{{ route('register') }}" class="underline font-medium text-yellow-300 hover:text-yellow-200">Daftar gratis</a>
+                    atau
+                    <a href="{{ route('login') }}" class="underline font-medium text-yellow-300 hover:text-yellow-200">login</a>
+                    untuk dapatkan diskon 10% untuk semua pemesanan billiard!
+                </p>
+            </div>
             @endguest
         </div>
 
@@ -105,21 +105,21 @@
                             Pilih Meja Billiard
                         </label>
                         <select id="table_select" name="table_select" required
-                                class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#1B2B28] focus:border-[#1B2B28] gtregular"
-                                onchange="updateSelectedTable()">
+                            class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#1B2B28] focus:border-[#1B2B28] gtregular"
+                            onchange="updateSelectedTable()">
                             <option value="">Pilih meja...</option>
                             @foreach($tables as $table)
-                                <option value="{{ $table->id }}"
-                                        data-name="{{ $table->name ?: $table->table_number }}"
-                                        data-number="{{ $table->table_number }}"
-                                        {{ $selectedTable && $selectedTable->id == $table->id ? 'selected' : '' }}>
-                                    Meja {{ $table->table_number }} {{ $table->name ? '- ' . $table->name : '' }}
-                                </option>
+                            <option value="{{ $table->id }}"
+                                data-name="{{ $table->name ?: $table->table_number }}"
+                                data-number="{{ $table->table_number }}"
+                                {{ $selectedTable && $selectedTable->id == $table->id ? 'selected' : '' }}>
+                                Meja {{ $table->table_number }} {{ $table->name ? '- ' . $table->name : '' }}
+                            </option>
                             @endforeach
                         </select>
                         <p class="mt-1 text-xs text-gray-500 gtregular">Pilih meja yang ingin Anda pesan</p>
                         @error('billiard_table_id')
-                            <p class="mt-1 text-sm text-red-600 gtregular">{{ $message }}</p>
+                        <p class="mt-1 text-sm text-red-600 gtregular">{{ $message }}</p>
                         @enderror
                     </div>
 
@@ -130,11 +130,11 @@
                             Nama Lengkap
                         </label>
                         <input type="text" id="customer_name" name="customer_name"
-                               value="{{ old('customer_name', $user?->name) }}" required
-                               placeholder="Masukkan nama lengkap Anda"
-                               class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#1B2B28] focus:border-[#1B2B28] gtregular">
+                            value="{{ old('customer_name', $user?->name) }}" required
+                            placeholder="Masukkan nama lengkap Anda"
+                            class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#1B2B28] focus:border-[#1B2B28] gtregular">
                         @error('customer_name')
-                            <p class="mt-1 text-sm text-red-600 gtregular">{{ $message }}</p>
+                        <p class="mt-1 text-sm text-red-600 gtregular">{{ $message }}</p>
                         @enderror
                     </div>
 
@@ -146,12 +146,12 @@
                             <span class="text-gray-500 text-xs gtregular">(untuk bukti pembayaran)</span>
                         </label>
                         <input type="text" id="customer_whatsapp" name="customer_whatsapp"
-                               value="{{ old('customer_whatsapp', $user?->no_wa) }}"
-                               placeholder="contoh: 08123456789"
-                               class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#1B2B28] focus:border-[#1B2B28] gtregular">
+                            value="{{ old('customer_whatsapp', $user?->no_wa) }}"
+                            placeholder="contoh: 08123456789"
+                            class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#1B2B28] focus:border-[#1B2B28] gtregular">
                         <p class="mt-1 text-xs text-gray-500 gtregular">Struk pembayaran akan dikirim ke nomor ini</p>
                         @error('customer_whatsapp')
-                            <p class="mt-1 text-sm text-red-600 gtregular">{{ $message }}</p>
+                        <p class="mt-1 text-sm text-red-600 gtregular">{{ $message }}</p>
                         @enderror
                     </div>
 
@@ -162,13 +162,13 @@
                             Waktu Mulai Sewa
                         </label>
                         <input type="datetime-local" id="rental_start" name="rental_start"
-                               value="{{ old('rental_start', now()->addHour()->format('Y-m-d\TH:i')) }}" required
-                               min="{{ now()->format('Y-m-d\TH:i') }}"
-                               class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#1B2B28] focus:border-[#1B2B28] gtregular"
-                               onchange="checkAvailability()">
+                            value="{{ old('rental_start', now()->addHour()->format('Y-m-d\TH:i')) }}" required
+                            min="{{ now()->format('Y-m-d\TH:i') }}"
+                            class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#1B2B28] focus:border-[#1B2B28] gtregular"
+                            onchange="checkAvailability()">
                         <p class="mt-1 text-xs text-gray-500 gtregular">Pilih waktu ketika Anda ingin mulai bermain</p>
                         @error('rental_start')
-                            <p class="mt-1 text-sm text-red-600 gtregular">{{ $message }}</p>
+                        <p class="mt-1 text-sm text-red-600 gtregular">{{ $message }}</p>
                         @enderror
                     </div>
 
@@ -179,17 +179,17 @@
                             Durasi Sewa (Jam)
                         </label>
                         <select id="duration_hours" name="duration_hours" required
-                                class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#1B2B28] focus:border-[#1B2B28] gtregular"
-                                onchange="calculatePrice(); checkAvailability();">
+                            class="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#1B2B28] focus:border-[#1B2B28] gtregular"
+                            onchange="calculatePrice(); checkAvailability();">
                             <option value="">Pilih durasi...</option>
                             @for($i = 1; $i <= 24; $i++)
                                 <option value="{{ $i }}" {{ old('duration_hours') == $i ? 'selected' : '' }}>
-                                    {{ $i }} jam
+                                {{ $i }} jam
                                 </option>
-                            @endfor
+                                @endfor
                         </select>
                         @error('duration_hours')
-                            <p class="mt-1 text-sm text-red-600 gtregular">{{ $message }}</p>
+                        <p class="mt-1 text-sm text-red-600 gtregular">{{ $message }}</p>
                         @enderror
                     </div>
                 </div>
@@ -228,33 +228,33 @@
 
                 <!-- Error Messages -->
                 @if ($errors->any())
-                    <div class="mt-6 bg-red-50 border border-red-200 rounded-md p-4">
-                        <div class="flex items-start gap-3">
-                            <i class="ri-error-warning-line text-red-400 text-xl flex-shrink-0 mt-0.5"></i>
-                            <div>
-                                <h3 class="text-sm font-medium text-red-800 gtbold mb-2">Perbaiki kesalahan berikut:</h3>
-                                <div class="text-sm text-red-700 gtregular">
-                                    <ul class="list-disc pl-5 space-y-1">
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
+                <div class="mt-6 bg-red-50 border border-red-200 rounded-md p-4">
+                    <div class="flex items-start gap-3">
+                        <i class="ri-error-warning-line text-red-400 text-xl flex-shrink-0 mt-0.5"></i>
+                        <div>
+                            <h3 class="text-sm font-medium text-red-800 gtbold mb-2">Perbaiki kesalahan berikut:</h3>
+                            <div class="text-sm text-red-700 gtregular">
+                                <ul class="list-disc pl-5 space-y-1">
+                                    @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
                             </div>
                         </div>
                     </div>
+                </div>
                 @endif
 
                 <!-- Action Buttons -->
                 <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-end">
                     <a href="{{ route('billiard.index') }}"
-                       class="border-2 border-gray-300 text-gray-700 px-6 py-3 rounded-full font-medium transition-all hover:bg-gray-50 flex items-center justify-center gap-2 gtmedium">
+                        class="border-2 border-gray-300 text-gray-700 px-6 py-3 rounded-full font-medium transition-all hover:bg-gray-50 flex items-center justify-center gap-2 gtmedium">
                         <i class="ri-arrow-left-line"></i>
                         Kembali
                     </a>
                     <button type="submit" id="payButton"
-                            class="bg-[#1B2B28] hover:bg-[#701D0D] text-white px-6 py-3 rounded-full font-medium transition-all flex items-center justify-center gap-2 gtmedium disabled:opacity-50 disabled:cursor-not-allowed"
-                            disabled>
+                        class="bg-[#1B2B28] hover:bg-[#701D0D] text-white px-6 py-3 rounded-full font-medium transition-all flex items-center justify-center gap-2 gtmedium disabled:opacity-50 disabled:cursor-not-allowed"
+                        disabled>
                         <i class="ri-shopping-cart-line"></i>
                         Pesan & Bayar Sekarang
                     </button>
@@ -303,43 +303,46 @@
                 return;
             }
 
-            fetch('{{ route('billiard.calculate-price') }}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                },
-                body: JSON.stringify({ duration_hours: duration })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    document.getElementById('pricePerHour').textContent = data.formatted.price_per_hour;
-                    document.getElementById('subtotal').textContent = data.formatted.subtotal;
-                    document.getElementById('totalAmount').textContent = data.formatted.total_amount;
+            fetch('{{ route('
+                    billiard.calculate - price ') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        },
+                        body: JSON.stringify({
+                            duration_hours: duration
+                        })
+                    })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById('pricePerHour').textContent = data.formatted.price_per_hour;
+                        document.getElementById('subtotal').textContent = data.formatted.subtotal;
+                        document.getElementById('totalAmount').textContent = data.formatted.total_amount;
 
-                    const discountRow = document.getElementById('discountRow');
-                    if (data.is_member && data.pricing.discount_amount > 0) {
-                        document.getElementById('discount').textContent = '- ' + data.formatted.discount_amount;
-                        discountRow.style.display = 'flex';
+                        const discountRow = document.getElementById('discountRow');
+                        if (data.is_member && data.pricing.discount_amount > 0) {
+                            document.getElementById('discount').textContent = '- ' + data.formatted.discount_amount;
+                            discountRow.style.display = 'flex';
+                        } else {
+                            discountRow.style.display = 'none';
+                        }
+
+                        priceCalculation.style.display = 'block';
+                        // Don't enable button yet, check availability first
+                        checkAvailability();
                     } else {
-                        discountRow.style.display = 'none';
+                        priceCalculation.style.display = 'none';
+                        payButton.disabled = true;
                     }
-
-                    priceCalculation.style.display = 'block';
-                    // Don't enable button yet, check availability first
-                    checkAvailability();
-                } else {
+                })
+                .catch(error => {
+                    console.error('Error calculating price:', error);
                     priceCalculation.style.display = 'none';
                     payButton.disabled = true;
-                }
-            })
-            .catch(error => {
-                console.error('Error calculating price:', error);
-                priceCalculation.style.display = 'none';
-                payButton.disabled = true;
-            });
+                });
         }
 
         function checkAvailability() {
@@ -374,50 +377,51 @@
 
             // Debounce the availability check
             availabilityTimer = setTimeout(() => {
-                fetch('{{ route('billiard.calculate-price') }}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                    },
-                    body: JSON.stringify({
-                        duration_hours: parseInt(duration),
-                        rental_start: rentalStart,
-                        table_id: tableId
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success && data.available !== false) {
-                        availabilityStatus.innerHTML = `
+                fetch('{{ route('
+                        billiard.calculate - price ') }}', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                            },
+                            body: JSON.stringify({
+                                duration_hours: parseInt(duration),
+                                rental_start: rentalStart,
+                                table_id: tableId
+                            })
+                        })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success && data.available !== false) {
+                            availabilityStatus.innerHTML = `
                             <div class="bg-green-50 border border-green-200 rounded-md p-4 flex items-center gap-3">
                                 <i class="ri-checkbox-circle-fill text-green-600 text-xl"></i>
                                 <p class="text-sm font-medium text-green-800 gtregular">Meja tersedia untuk waktu yang dipilih</p>
                             </div>
                         `;
-                        payButton.disabled = false;
-                    } else {
-                        availabilityStatus.innerHTML = `
+                            payButton.disabled = false;
+                        } else {
+                            availabilityStatus.innerHTML = `
                             <div class="bg-red-50 border border-red-200 rounded-md p-4 flex items-center gap-3">
                                 <i class="ri-close-circle-fill text-red-600 text-xl"></i>
                                 <p class="text-sm font-medium text-red-800 gtregular">${data.message || 'Meja tidak tersedia untuk waktu yang dipilih'}</p>
                             </div>
                         `;
-                        payButton.disabled = true;
-                    }
-                    availabilityStatus.style.display = 'block';
-                })
-                .catch(error => {
-                    console.error('Error checking availability:', error);
-                    availabilityStatus.innerHTML = `
+                            payButton.disabled = true;
+                        }
+                        availabilityStatus.style.display = 'block';
+                    })
+                    .catch(error => {
+                        console.error('Error checking availability:', error);
+                        availabilityStatus.innerHTML = `
                         <div class="bg-red-50 border border-red-200 rounded-md p-4 flex items-center gap-3">
                             <i class="ri-error-warning-fill text-red-600 text-xl"></i>
                             <p class="text-sm font-medium text-red-800 gtregular">Terjadi kesalahan saat memeriksa ketersediaan</p>
                         </div>
                     `;
-                    payButton.disabled = true;
-                });
+                        payButton.disabled = true;
+                    });
             }, 500); // 500ms delay
         }
 
@@ -441,4 +445,5 @@
         });
     </script>
 </body>
+
 </html>
