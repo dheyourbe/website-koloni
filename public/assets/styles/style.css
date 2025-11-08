@@ -1,0 +1,104 @@
+@font-face {
+    font-family: 'GT-America';
+    src: url('../font/GT-America/GT-America-Mono-Regular-Trial.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'GT-America-Light';
+    src: url('../font/GT-America/GT-America-Condensed-Light-Italic-Trial.otf') format('opentype');
+}
+@font-face {
+    font-family: 'GT-America-Regular';
+    src: url('../font/GT-America/GT-America-Mono-Regular-Trial.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'GT-America-Bold';
+    src: url('../font/GT-America/GT-America-Mono-Bold-Trial.otf') format('opentype');
+}
+@font-face {
+    font-family: 'GT-America-Expanded-Light';
+    src: url('../font/GT-America/GT-America-Expanded-Light-Trial.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'ITC-CE-DEMI';
+    src: url('../font/ITC Avant Garde Gothic/ITC Avant Garde Gothic CE Demi/ITC Avant Garde Gothic CE Demi.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'ITC-Garden';
+    src: url('../font/ITC Avant Garde Gothic/ITC Avant Garde Gothic Medium/ITC Avant Garde Gothic Medium.otf') format('opentype');
+}
+@font-face {
+    font-family: "ITC-Garden-Bold";
+    src: url('../font/ITC Avant Garde Gothic/ITC Avant Garde Gothic Bold/ITC Avant Garde Gothic Bold.otf') format('opentype');
+}
+@font-face {
+    font-family: "ITC-Garden-medium";
+    src: url('../font/ITC Avant Garde Gothic/ITC Avant Garde Gothic Medium/ITC Avant Garde Gothic Medium.otf') format('opentype');
+}
+@font-face {
+    font-family: 'light';
+    src: url('../font/ITC Avant Garde Gothic/itca-gardelight-trial.otf') format('opentype');
+}
+
+.swiper-pagination {
+  position: static !important;
+  text-align: center;
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.navbar {
+  transform: none !important;
+}
+.light{
+    font-family: 'light', sans-serif;
+}
+
+.expandedlight{
+    font-family: 'GT-America-Expanded-Light', sans-serif;
+}
+.gtbold{
+    font-family: 'GT-America-Bold', sans-serif;
+}
+
+.gtregular{
+    font-family: 'GT-America-Regular', sans-serif;
+}
+
+.Itcdemi{
+    font-family: 'ITC-CE-DEMI', sans-serif;
+}
+
+.garden{
+    font-family: 'ITC-Garden', sans-serif;
+}
+.gardenbold{
+    font-family: 'ITC-Garden-Bold', sans-serif;
+}
+.gardenmedium{
+    font-family: 'ITC-Garden-medium', sans-serif;
+}
+
+.america{
+    font-family: 'GT-America', sans-serif;
+}
+.americalight{
+    font-family: 'GT-America-Light', sans-serif;
+}
+
+ /* @media (max-width: 923px) {
+    .responsive-p {
+      font-size: 0.6rem;
+      line-height: 1.2rem;
+      margin-top: 1rem;
+      text-align: center;
+    }
+  } */
+
