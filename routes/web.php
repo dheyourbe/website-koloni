@@ -43,4 +43,4 @@ Route::prefix('products')->name('products.')->group(function () {
     Route::get('/', [ProductController::class, 'index'])->name('index');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

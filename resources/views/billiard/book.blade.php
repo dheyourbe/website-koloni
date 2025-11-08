@@ -303,8 +303,7 @@
                 return;
             }
 
-            fetch('{{ route('
-                    billiard.calculate - price ') }}', {
+            fetch('{{ route('billiard.calculate-price') }}', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -377,8 +376,7 @@
 
             // Debounce the availability check
             availabilityTimer = setTimeout(() => {
-                fetch('{{ route('
-                        billiard.calculate - price ') }}', {
+                fetch('{{ route('billiard.calculate-price') }}', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
