@@ -7,7 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://steadfast-light-caffe.up.railway.app/build/assets/app-oxxngOD7.css" />
+    <link rel="stylesheet" href="https://steadfast-light-caffe.up.railway.app/build/assets/app-eNwG1Jbd.css" />
     <title>Pesan Meja Billiard - {{ config('app.name', 'KoloniCoffee') }}</title>
 </head>
 

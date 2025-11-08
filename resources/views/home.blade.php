@@ -8,7 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
-    <link rel="stylesheet" href="https://steadfast-light-caffe.up.railway.app/build/assets/app-oxxngOD7.css" />
+    <link rel="stylesheet" href="https://steadfast-light-caffe.up.railway.app/build/assets/app-eNwG1Jbd.css" />
 </head>
 
 <body class="america overflow-x-hidden">
