@@ -200,7 +200,7 @@
             <h1 class="text-3xl px-4 gtbold py-6">Billiard Rental</h1>
             <div class="relative max-w-6xl mx-auto px-4">
                 <!-- Background Image -->
-                <div class="relative h-[300px] rounded-xl overflow-hidden">
+                <div class="relative h-[400px] rounded-xl overflow-hidden">
                     <img src="{{ asset('assets/images/background-billard.png') }}" alt="background"
                         class="absolute inset-0 w-full h-full object-cover">
                 </div>
