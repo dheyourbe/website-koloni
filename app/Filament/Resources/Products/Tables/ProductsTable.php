@@ -19,10 +19,8 @@ class ProductsTable
             ->columns([
                 ImageColumn::make('photo')
                     ->label('Foto')
-                    ->disk('public')   // WAJIB → supaya mencocokkan FileUpload
-                    ->directory('products')
                     ->circular()
-                    ->defaultImageUrl(asset(null)),
+                    ->defaultImageUrl('/images/placeholder-product.jpg'),
 
                 TextColumn::make('category')
                     ->label('Kategori')
