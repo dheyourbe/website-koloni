@@ -41,20 +41,30 @@
                 class="flex md:flex-row flex-col items-center gap-4 md:gap-0 md:items-start px-10 justify-center md:justify-between">
                 <div class="flex flex-col items-center md:items-start gap-4">
                     <p class="max-w-lg tracking-wider text-base md:text-lg gtregular text-[#333333] text-justify">
-                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellat
-                        quidem aliquid, quod aut magni ipsa error ad dignissimos
-                        consequatur omnis reiciendis dicta mollitia, esse dolorum eius
-                        non. Aliquam voluptas eaque delectus in id repudiandae sit
-                        consequuntur, laboriosam deleniti totam sapiente saepe quas sint
-                        dicta earum, exercitationem enim ex? Ab, alias.
+                        Koloni adalah ruang kreatif berbasis
+                        kafe yang menggabungkan kopi
+                        berkualitas, sajian Nusantara, dan
+                        ruang komunitas yang hangat.
+                        Kami hadir bukan hanya untuk
+                        menyajikan secangkir kopi terbaik, tapi
+                        juga sebagai titik temu bagi para
+                        Kolonials; individu dan komunitas
+                        yang dinamis, kreatif, dan kolaboratif.
                     </p>
                     <img src="{{ asset('assets/images/kopi.png') }}" alt="kopilate" class="hidden md:block" />
                 </div>
                 <div class="flex flex-row md:flex-col items-center gap-10 relative">
                     <p class="max-w-sm text-xs md:text-base tracking-wide gtregular text-[#333333e2] text-justify">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. A
-                        voluptate neque ipsum fugit in odio sint cumque dignissimos culpa
-                        veniam!
+                        Dengan biji kopi pilihan dari Tanamera
+                        dan makanan Nusantara pilihan,
+                        setiap
+                        cita
+                        rasa
+                        di
+                        Koloni
+                        menghadirkan pengalaman autentik
+                        yang membuka percakapan baru, ide
+                        besar, hingga peluang kolaborasi.
                     </p>
                     <div
                         class="bg-[#1B2B28] text-[#EAE3D6] rounded-full flex items-center justify-center aspect-square max-w-[14rem] w-full gtbold mx-auto text-center px-6">
@@ -190,8 +200,11 @@
             <h1 class="text-3xl px-4 gtbold py-6">Billiard Rental</h1>
             <div class="relative max-w-6xl mx-auto px-4">
                 <!-- Background Image -->
-                <img src="{{ asset('assets/images/background-billard.png') }}" alt="background"
-                    class="w-full h-[300px] object-cover rounded-xl">
+                <div class="relative h-[300px] rounded-xl overflow-hidden">
+                    <img src="{{ asset('assets/images/background-billard.png') }}" alt="background"
+                        class="absolute inset-0 w-full h-full object-cover">
+                </div>
+
 
                 <!-- Content Container -->
                 <div class="absolute inset-0 flex items-center">

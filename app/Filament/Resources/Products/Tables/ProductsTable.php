@@ -19,17 +19,19 @@ class ProductsTable
             ->columns([
                 ImageColumn::make('photo')
                     ->label('Foto')
+                    ->disk('public')   // WAJIB → supaya mencocokkan FileUpload
+                    ->directory('products')
                     ->circular()
-                    ->defaultImageUrl('/images/placeholder-product.jpg'),
+                    ->defaultImageUrl(asset(null)),
 
                 TextColumn::make('category')
                     ->label('Kategori')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'makanan' => 'success',
                         'minuman' => 'info',
                     })
-                    ->formatStateUsing(fn (string $state): string => ucfirst($state)),
+                    ->formatStateUsing(fn(string $state): string => ucfirst($state)),
 
                 TextColumn::make('title')
                     ->label('Nama Produk')
